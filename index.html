@@ -116,8 +116,22 @@ ul{margin:0;padding:0;list-style:none}
 
 /* ---------- day card ---------- */
 .daytop{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}
-.daytop .menu{font-size:19px;font-weight:750;letter-spacing:-.02em;line-height:1.25;flex:1;min-width:170px}
+.menuwrap{flex:1 1 190px;min-width:0}
+.menuline{display:flex;align-items:flex-start;gap:7px}
+.daytop .menu{font-size:19px;font-weight:750;letter-spacing:-.02em;line-height:1.25;flex:1 1 auto;min-width:0;word-break:keep-all;overflow-wrap:anywhere}
 .daytop .dmeta{font-size:12px;color:var(--muted);margin-top:3px}
+.editbtn{
+  flex:0 0 auto;margin-top:3px;border:1px solid var(--line);background:#FFF8F0;border-radius:10px;
+  padding:5px 9px;font-size:11.5px;font-weight:700;color:var(--terra-d);min-height:32px;white-space:nowrap
+}
+.editbtn:active{background:var(--cream2)}
+.menu-edit{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:6px}
+.menu-edit input{
+  width:100%;height:42px;border:1px solid var(--terra);border-radius:11px;padding:0 10px;
+  font-size:16px;font-weight:700;line-height:1.2;background:#fff;color:var(--ink)
+}
+.menu-edit .btns{display:flex;gap:6px}
+.menu-edit .btns .hbtn{flex:1 1 auto;justify-content:center;min-height:36px}
 .chip{
   display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 9px;
   font-size:11px;font-weight:700;background:var(--cream2);color:var(--terra-d);border:1px solid var(--line)
@@ -284,7 +298,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
     <div>
       <div class="eyebrow">리아 · 프랑스식 초기 이유식</div>
       <h1>리아 이유식 식단표</h1>
-      <div class="sub" id="appSub">D+160 ~ D+187 · 28일 · 1회 고형분 45~55g (물 포함 50~65g)</div>
+      <div class="sub" id="appSub">D+160 ~ D+187 · 28일 · 1회 고형분 45~60g (필요 시 물로 묽기 조절)</div>
     </div>
     <div class="spacer"></div>
     <div class="hbtns">
@@ -329,7 +343,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
     <div class="dbbody"><ul class="memo">
       <li><b>아이폰 홈 화면에 추가</b> — 사파리에서 이 파일을 연 뒤 공유 → “홈 화면에 추가”를 누르면 앱처럼 열립니다. 파일 앱에서 열 때는 공유 → 사파리로 여는 편이 안전해요.</li>
       <li><b>먹임 완료 · 반응 기록</b> — 날짜 칩을 눌러 그 날로 가서 오른쪽 위 버튼과 반응 칩을 쓰면 자동 저장됩니다(이 기기 브라우저에만 저장).</li>
-      <li><b>재료 바꿔 보기</b> — g수는 −5/−1/+1/+5 또는 직접 입력, 재료는 아래 드롭다운으로 추가·삭제. “기본값 복원”을 누르면 그 날은 원래 식단으로 돌아갑니다.</li>
+      <li><b>메뉴 이름 바꾸기</b> — 카드 위 메뉴명 옆 <b>✏️ 수정</b>을 누르면 그 자리에서 이름을 고칠 수 있어요(Enter 저장 · Esc 취소). 바꾼 이름은 이 기기에만 저장되고, “기본값 복원”을 누르면 원래 이름으로 돌아갑니다.</li>
+      <li><b>재료 바꿔 보기</b> — g수는 −5/−1/+1/+5 또는 직접 입력, 재료는 아래 드롭다운으로 추가·삭제. “기본값 복원”을 누르면 그 날은 원래 식단과 메뉴 이름으로 돌아갑니다.</li>
       <li><b>쌀 농도 · 완두콩 기준</b> — 쌀이 든 날은 미음(10배)/진죽(5배)/쌀밥, 완두콩이 든 날은 원물 퓨레/베리네이처 큐브로 바꿔 열량을 비교할 수 있습니다.</li>
       <li><b>백업</b> — 기기를 바꾸거나 브라우저 기록을 지우기 전에 “기록 백업”으로 JSON을 받아 두세요.</li>
     </ul></div>
@@ -348,12 +363,14 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
    리아 이유식 식단표 웹앱 — 데이터·계산·화면
    외부 라이브러리 없음. 오프라인 단일 파일.
    ===================================================================== */
-const DATA = {"weeks":[{"i":0,"label":"1주차","range":"D+160~166","tag":"원본 유지 · 이미 먹인 구간"},{"i":1,"label":"2주차","range":"D+167~173","tag":"목·금 완두콩+아보카도 · 토 양배추 추가 (55g)"},{"i":2,"label":"3주차","range":"D+174~180","tag":"청경채 → 콜리플라워 · 쌀 대신 파스닙 대체 · 물로 묽기 조절"},{"i":3,"label":"4주차","range":"D+181~187","tag":"브로콜리 → 당근(만 6개월 이후) · 쌀 대신 파스닙 대체"}],"days":[{"id":"D+160","n":0,"week":0,"short":"D+160","iso":"2026-11-08","dateLabel":"11/8","dow":"일","menu":"애호박 퓨레","items":[{"id":"zucchini","g":30.0},{"id":"water","g":20.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+161","n":1,"week":0,"short":"D+161","iso":"2026-11-09","dateLabel":"11/9","dow":"월","menu":"애호박소고기 퓨레","items":[{"id":"zucchini","g":30.0},{"id":"beef","g":5.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+162","n":2,"week":0,"short":"D+162","iso":"2026-11-10","dateLabel":"11/10","dow":"화","menu":"애호박소고기 퓨레","items":[{"id":"zucchini","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+163","n":3,"week":0,"short":"D+163","iso":"2026-11-11","dateLabel":"11/11","dow":"수","menu":"감자소고기 퓨레","items":[{"id":"potato","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"감자 식감 비선호","mod":false},{"id":"D+164","n":4,"week":0,"short":"D+164","iso":"2026-11-12","dateLabel":"11/12","dow":"목","menu":"감자소고기 퓨레","items":[{"id":"potato","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"감자 식감 비선호","mod":false},{"id":"D+165","n":5,"week":0,"short":"D+165","iso":"2026-11-13","dateLabel":"11/13","dow":"금","menu":"애호박감자소고기 퓨레","items":[{"id":"zucchini","g":15.0},{"id":"potato","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+166","n":6,"week":0,"short":"D+166","iso":"2026-11-14","dateLabel":"11/14","dow":"토","menu":"애호박감자소고기 퓨레","items":[{"id":"zucchini","g":15.0},{"id":"potato","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+167","n":7,"week":1,"short":"D+167","iso":"2026-11-15","dateLabel":"11/15","dow":"일","menu":"양배추소고기 퓨레","items":[{"id":"cabbage","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+168","n":8,"week":1,"short":"D+168","iso":"2026-11-16","dateLabel":"11/16","dow":"월","menu":"양배추소고기 퓨레","items":[{"id":"cabbage","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+169","n":9,"week":1,"short":"D+169","iso":"2026-11-17","dateLabel":"11/17","dow":"화","menu":"양배추아보카도소고기 퓨레","items":[{"id":"cabbage","g":20.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":false,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+170","n":10,"week":1,"short":"D+170","iso":"2026-11-18","dateLabel":"11/18","dow":"수","menu":"양배추아보카도소고기 퓨레","items":[{"id":"cabbage","g":10.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":20.0}],"oil":false,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+171","n":11,"week":1,"short":"D+171","iso":"2026-11-19","dateLabel":"11/19","dow":"목","menu":"완두콩아보카도소고기 퓨레","items":[{"id":"peas","g":15.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":20.0}],"oil":false,"oilG":0.05,"note":"","mod":true},{"id":"D+172","n":12,"week":1,"short":"D+172","iso":"2026-11-20","dateLabel":"11/20","dow":"금","menu":"완두콩아보카도소고기 퓨레","items":[{"id":"peas","g":15.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":20.0}],"oil":false,"oilG":0.05,"note":"","mod":true},{"id":"D+173","n":13,"week":1,"short":"D+173","iso":"2026-11-21","dateLabel":"11/21","dow":"토","menu":"완두콩아보카도양배추소고기 퓨레","items":[{"id":"peas","g":15.0},{"id":"avocado","g":10.0},{"id":"cabbage","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":false,"oilG":0.05,"note":"","mod":true},{"id":"D+174","n":14,"week":2,"short":"D+174","iso":"2026-11-22","dateLabel":"11/22","dow":"일","menu":"콜리플라워파스닙소고기 퓨레","items":[{"id":"cauliflower","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+175","n":15,"week":2,"short":"D+175","iso":"2026-11-23","dateLabel":"11/23","dow":"월","menu":"콜리플라워파스닙소고기 퓨레","items":[{"id":"cauliflower","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+176","n":16,"week":2,"short":"D+176","iso":"2026-11-24","dateLabel":"11/24","dow":"화","menu":"단호박파스닙소고기 퓨레","items":[{"id":"kabocha","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"물 15~20g로 조절","mod":true},{"id":"D+177","n":17,"week":2,"short":"D+177","iso":"2026-11-25","dateLabel":"11/25","dow":"수","menu":"단호박파스닙소고기 퓨레","items":[{"id":"kabocha","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"물 15~20g로 조절","mod":true},{"id":"D+178","n":18,"week":2,"short":"D+178","iso":"2026-11-26","dateLabel":"11/26","dow":"목","menu":"콜리플라워단호박파스닙소고기 퓨레","items":[{"id":"cauliflower","g":15.0},{"id":"kabocha","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+179","n":19,"week":2,"short":"D+179","iso":"2026-11-27","dateLabel":"11/27","dow":"금","menu":"콜리플라워단호박파스닙소고기 퓨레","items":[{"id":"cauliflower","g":15.0},{"id":"kabocha","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+180","n":20,"week":2,"short":"D+180","iso":"2026-11-28","dateLabel":"11/28","dow":"토","menu":"콜리플라워단호박파스닙소고기 퓨레","items":[{"id":"cauliflower","g":15.0},{"id":"kabocha","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+181","n":21,"week":3,"short":"D+181","iso":"2026-11-29","dateLabel":"11/29","dow":"일","menu":"당근파스닙소고기 퓨레","items":[{"id":"carrot","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+182","n":22,"week":3,"short":"D+182","iso":"2026-11-30","dateLabel":"11/30","dow":"월","menu":"당근파스닙소고기 퓨레","items":[{"id":"carrot","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+183","n":23,"week":3,"short":"D+183","iso":"2026-12-01","dateLabel":"12/1","dow":"화","menu":"고구마파스닙소고기 퓨레","items":[{"id":"sweetpotato","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":20.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+184","n":24,"week":3,"short":"D+184","iso":"2026-12-02","dateLabel":"12/2","dow":"수","menu":"고구마파스닙소고기 퓨레","items":[{"id":"sweetpotato","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":20.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+185","n":25,"week":3,"short":"D+185","iso":"2026-12-03","dateLabel":"12/3","dow":"목","menu":"당근고구마파스닙소고기 퓨레","items":[{"id":"carrot","g":15.0},{"id":"sweetpotato","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"물 15~20g로 조절","mod":true},{"id":"D+186","n":26,"week":3,"short":"D+186","iso":"2026-12-04","dateLabel":"12/4","dow":"금","menu":"당근고구마파스닙소고기 퓨레","items":[{"id":"carrot","g":15.0},{"id":"sweetpotato","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"물 15~20g로 조절","mod":true},{"id":"D+187","n":27,"week":3,"short":"D+187","iso":"2026-12-05","dateLabel":"12/5","dow":"토","menu":"당근고구마파스닙소고기 퓨레","items":[{"id":"carrot","g":15.0},{"id":"sweetpotato","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"물 15~20g로 조절","mod":true}],"foods":[{"id":"zucchini","name":"애호박","state":"삶거나 찐 것","group":"veg","kcal":15.0,"carb":2.69,"prot":1.14,"fat":0.36,"sat":0.072,"mono":0.029,"poly":0.151,"source":"USDA FoodData Central 169292 (SR Legacy)","defaultG":20,"split":false},{"id":"cabbage","name":"양배추","state":"삶거나 찐 것","group":"veg","kcal":23.0,"carb":5.51,"prot":1.27,"fat":0.06,"sat":0.0,"mono":0.019,"poly":0.023,"source":"USDA FoodData Central 169976 (SR Legacy)","defaultG":20,"split":false},{"id":"cauliflower","name":"콜리플라워","state":"삶거나 찐 것","group":"veg","kcal":23.0,"carb":4.11,"prot":1.84,"fat":0.45,"sat":0.07,"mono":0.032,"poly":0.217,"source":"USDA FoodData Central 170397 (SR Legacy)","defaultG":20,"split":false},{"id":"carrot","name":"당근","state":"삶거나 찐 것","group":"veg","kcal":35.0,"carb":8.22,"prot":0.76,"fat":0.18,"sat":0.03,"mono":0.006,"poly":0.089,"source":"USDA FoodData Central 170394 (SR Legacy)","defaultG":20,"split":false},{"id":"broccoli","name":"브로콜리","state":"삶거나 찐 것","group":"veg","kcal":35.0,"carb":7.2,"prot":2.4,"fat":0.4,"sat":0.08,"mono":0.03,"poly":0.18,"source":"USDA FoodData Central 169967 (SR Legacy)","defaultG":15,"split":false},{"id":"onion","name":"양파","state":"찐 것","group":"veg","kcal":44.0,"carb":10.2,"prot":1.36,"fat":0.19,"sat":0.031,"mono":0.027,"poly":0.073,"source":"USDA FoodData Central 170001 (SR Legacy)","defaultG":10,"split":false},{"id":"radish","name":"무","state":"삶은 것","group":"veg","kcal":17.0,"carb":3.43,"prot":0.67,"fat":0.24,"sat":0.07,"mono":0.04,"poly":0.11,"source":"USDA FoodData Central 168452 (SR Legacy)","defaultG":15,"split":false},{"id":"spinach","name":"시금치","state":"데친 것","group":"veg","kcal":23.0,"carb":3.75,"prot":2.97,"fat":0.26,"sat":0.04,"mono":0.01,"poly":0.11,"source":"USDA FoodData Central 168463 (SR Legacy)","defaultG":10,"split":false},{"id":"parsnip","name":"파스닙","state":"삶거나 찐 것","group":"veg","kcal":71.0,"carb":17.01,"prot":1.32,"fat":0.3,"sat":0.05,"mono":0.112,"poly":0.047,"source":"USDA FoodData Central 170009 (SR Legacy)","defaultG":15,"split":false},{"id":"rice_misu","name":"쌀미음","state":"10배죽 · 익힌 것","group":"carb","kcal":33.18,"carb":7.27,"prot":0.648,"fat":0.06,"sat":0.016,"mono":0.019,"poly":0.016,"source":"계산값 · 백미 USDA 169756 (백미 1 : 물 10)","defaultG":20,"split":false},{"id":"rice_jinjuk","name":"쌀죽(진죽)","state":"5배죽 · 익힌 것","group":"carb","kcal":60.83,"carb":13.33,"prot":1.188,"fat":0.11,"sat":0.03,"mono":0.034,"poly":0.029,"source":"계산값 · 백미 USDA 169756 (백미 1 : 물 5)","defaultG":20,"split":false},{"id":"rice_bap","name":"쌀밥","state":"익힌 흰쌀밥","group":"carb","kcal":130.0,"carb":28.2,"prot":2.7,"fat":0.28,"sat":0.08,"mono":0.088,"poly":0.076,"source":"USDA FoodData Central 169757 (SR Legacy)","defaultG":20,"split":false},{"id":"potato","name":"감자","state":"껍질 벗겨 삶거나 찐 것","group":"carb","kcal":86.0,"carb":20.0,"prot":1.71,"fat":0.1,"sat":0.026,"mono":0.002,"poly":0.043,"source":"USDA FoodData Central 170440 (SR Legacy)","defaultG":20,"split":false},{"id":"sweetpotato","name":"고구마","state":"찐 것 (국내산 고구마 기준)","group":"carb","kcal":163.0,"carb":39.41,"prot":1.08,"fat":0.15,"sat":0.06,"mono":0.0,"poly":0.08,"source":"농촌진흥청 국가표준식품성분표 (고구마, 찐것)","defaultG":20,"split":false},{"id":"kabocha","name":"단호박","state":"찐 것","group":"carb","kcal":66.0,"carb":15.45,"prot":1.72,"fat":0.84,"sat":0.14,"mono":0.31,"poly":0.36,"source":"농촌진흥청 국가표준식품성분표 (호박, 단호박, 찐것)","defaultG":20,"split":true},{"id":"oats","name":"오트밀","state":"익힌 것 (물로 조리)","group":"carb","kcal":71.0,"carb":12.0,"prot":2.54,"fat":1.52,"sat":0.31,"mono":0.435,"poly":0.559,"source":"USDA FoodData Central 173905 (SR Legacy)","defaultG":20,"split":false},{"id":"beef","name":"소고기","state":"삶은 우둔·안심 살코기","group":"protein","kcal":163.0,"carb":0.0,"prot":29.9,"fat":3.9,"sat":1.4,"mono":1.6,"poly":0.3,"source":"USDA FoodData Central 170633 (SR Legacy)","defaultG":10,"split":false},{"id":"chicken","name":"닭안심","state":"삶은 것","group":"protein","kcal":151.0,"carb":0.0,"prot":29.0,"fat":3.03,"sat":0.85,"mono":1.03,"poly":0.66,"source":"USDA FoodData Central 171478 (SR Legacy)","defaultG":10,"split":false},{"id":"tofu","name":"두부","state":"생 두부 (단단한 것)","group":"protein","kcal":144.0,"carb":2.78,"prot":17.3,"fat":8.72,"sat":1.26,"mono":1.91,"poly":4.92,"source":"USDA FoodData Central 172475 (SR Legacy)","defaultG":15,"split":false},{"id":"peas","name":"완두콩","state":"삶거나 찐 퓨레","group":"protein","kcal":84.0,"carb":15.6,"prot":5.36,"fat":0.22,"sat":0.039,"mono":0.019,"poly":0.102,"source":"USDA FoodData Central 170420 (SR Legacy)","defaultG":15,"split":false},{"id":"pea_cube","name":"완두콩 큐브","state":"베리네이처 2단계 (찐 뒤 급속냉동)","group":"protein","kcal":125.0,"carb":22.0,"prot":7.0,"fat":0.8,"sat":0.0,"mono":0.4,"poly":0.4,"source":"식약처 공공데이터 · 베리네이처 유기농 다진완두콩 45g","defaultG":15,"split":true},{"id":"eggyolk","name":"계란노른자","state":"삶은 것","group":"protein","kcal":322.0,"carb":3.59,"prot":15.86,"fat":26.54,"sat":9.551,"mono":11.738,"poly":4.204,"source":"USDA FoodData Central 172184 (SR Legacy)","defaultG":5,"split":false},{"id":"avocado","name":"아보카도","state":"생과육 (익히지 않음)","group":"fat","kcal":160.0,"carb":8.53,"prot":2.0,"fat":14.7,"sat":2.126,"mono":9.799,"poly":1.816,"source":"USDA FoodData Central 171705 (SR Legacy)","defaultG":10,"split":false},{"id":"oliveoil","name":"올리브오일","state":"엑스트라버진 생오일","group":"fat","kcal":884.0,"carb":0.0,"prot":0.0,"fat":100.0,"sat":13.8,"mono":73.0,"poly":10.5,"source":"USDA FoodData Central 171413 (SR Legacy)","defaultG":0.05,"split":false},{"id":"water","name":"물","state":"끓인 물 또는 분유","group":"water","kcal":0.0,"carb":0.0,"prot":0.0,"fat":0.0,"sat":0.0,"mono":0.0,"poly":0.0,"source":"열량 없음","defaultG":15,"split":false}],"memos":["<b>아보카도가 들어가는 날(D+169~173)은 올리브오일을 빼고</b>, 나머지 모든 날(D+160~168, D+174~187)은 0.05g(1방울)을 넣습니다. 불포화지방이 겹치는 것을 피하려는 기준이에요.","아보카도는 익히지 않고 <b>먹이기 직전에 생으로 으깨</b> 섞습니다. 완두콩은 껍질을 제거해 곱게 갈아 주세요.","파스닙은 두꺼운 껍질과 가운데 질긴 심을 도려내 푹 찐 뒤 묽게 갈고, 철분 보완을 위해 <b>소고기 10g을 함께</b> 넣습니다. 첫 1~2끼는 변 상태를 확인하세요.","채소 퓨레는 조리 후 바로 식혀 냉동 큐브로 보관하고, <b>해동 후 24시간 내</b>에 소비합니다.","감자는 리아가 텁텁한 식감을 싫어해서(11/17 기록) 애호박·양배추와 섞어 주는 편이 잘 먹습니다.","당근·시금치는 고질산염 채소라 만 6개월(12/2) 이전에는 보류하고, 4주차(D+181~)부터 넣습니다.","콜리플라워는 가스가 찰 수 있어 첫 1~2끼 변·복부 상태를 확인합니다.","<b>새 재료는 하루에 하나만</b> 추가해야 반응이 왔을 때 원인을 구분할 수 있습니다. 3주차는 파스닙 → 콜리플라워 → 단호박 순서로 이틀씩 나누는 안을 검토 중입니다(앱에서 재료·g수를 직접 바꿔 시뮬레이션 가능).","단호박·고구마는 국내산 <b>찐것</b> 기준입니다. 수분이 적어 100g당 열량이 높으니 물 15~20g로 묽기를 맞춰 주세요.","베리네이처 유기농 다진완두콩 큐브는 <b>단완두콩 100%</b>를 찐 뒤 급속냉동한 제품(식약처 공공데이터 100g당 125kcal)입니다. 물에 삶은 원물 퓨레(84kcal/100g)보다 수분이 적어 같은 무게에서 열량이 높습니다.","쌀은 기본 <b>5배죽(진죽)</b> 기준이고, 앱에서 미음(10배죽)·쌀밥으로 바꿔 비교할 수 있습니다."],"meta":{"subject":"리아","birth":null,"range":"D+160 ~ D+187","start":"2026-11-08","end":"2026-12-05","generated":"2026-11-18"}};
+const DATA = {"weeks":[{"i":0,"label":"1주차","range":"D+160~166","tag":"원본 유지 · 이미 먹인 구간"},{"i":1,"label":"2주차","range":"D+167~173","tag":"목·금 완두콩+아보카도 · 토 양배추 추가 (55g)"},{"i":2,"label":"3주차","range":"D+174~180","tag":"청경채 → 콜리플라워 · 파스닙+쌀 병행 (60g)"},{"i":3,"label":"4주차","range":"D+181~187","tag":"브로콜리 → 당근(만 6개월 이후) · 고구마 → 무 · 파스닙+쌀 병행 (60g)"}],"days":[{"id":"D+160","n":0,"week":0,"short":"D+160","iso":"2026-11-08","dateLabel":"11/8","dow":"일","menu":"애호박 퓨레","items":[{"id":"zucchini","g":30.0},{"id":"water","g":20.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+161","n":1,"week":0,"short":"D+161","iso":"2026-11-09","dateLabel":"11/9","dow":"월","menu":"애호박소고기 퓨레","items":[{"id":"zucchini","g":30.0},{"id":"beef","g":5.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+162","n":2,"week":0,"short":"D+162","iso":"2026-11-10","dateLabel":"11/10","dow":"화","menu":"애호박소고기 퓨레","items":[{"id":"zucchini","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+163","n":3,"week":0,"short":"D+163","iso":"2026-11-11","dateLabel":"11/11","dow":"수","menu":"감자소고기 퓨레","items":[{"id":"potato","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"감자 식감 비선호","mod":false},{"id":"D+164","n":4,"week":0,"short":"D+164","iso":"2026-11-12","dateLabel":"11/12","dow":"목","menu":"감자소고기 퓨레","items":[{"id":"potato","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"감자 식감 비선호","mod":false},{"id":"D+165","n":5,"week":0,"short":"D+165","iso":"2026-11-13","dateLabel":"11/13","dow":"금","menu":"애호박감자소고기 퓨레","items":[{"id":"zucchini","g":15.0},{"id":"potato","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+166","n":6,"week":0,"short":"D+166","iso":"2026-11-14","dateLabel":"11/14","dow":"토","menu":"애호박감자소고기 퓨레","items":[{"id":"zucchini","g":15.0},{"id":"potato","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+167","n":7,"week":1,"short":"D+167","iso":"2026-11-15","dateLabel":"11/15","dow":"일","menu":"양배추소고기 퓨레","items":[{"id":"cabbage","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+168","n":8,"week":1,"short":"D+168","iso":"2026-11-16","dateLabel":"11/16","dow":"월","menu":"양배추소고기 퓨레","items":[{"id":"cabbage","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+169","n":9,"week":1,"short":"D+169","iso":"2026-11-17","dateLabel":"11/17","dow":"화","menu":"양배추아보카도소고기 퓨레","items":[{"id":"cabbage","g":20.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":false,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+170","n":10,"week":1,"short":"D+170","iso":"2026-11-18","dateLabel":"11/18","dow":"수","menu":"양배추아보카도소고기 퓨레","items":[{"id":"cabbage","g":10.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":20.0}],"oil":false,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+171","n":11,"week":1,"short":"D+171","iso":"2026-11-19","dateLabel":"11/19","dow":"목","menu":"완두콩아보카도소고기 퓨레","items":[{"id":"peas","g":15.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":20.0}],"oil":false,"oilG":0.05,"note":"","mod":true},{"id":"D+172","n":12,"week":1,"short":"D+172","iso":"2026-11-20","dateLabel":"11/20","dow":"금","menu":"완두콩아보카도소고기 퓨레","items":[{"id":"peas","g":15.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":20.0}],"oil":false,"oilG":0.05,"note":"","mod":true},{"id":"D+173","n":13,"week":1,"short":"D+173","iso":"2026-11-21","dateLabel":"11/21","dow":"토","menu":"완두콩아보카도양배추소고기 퓨레","items":[{"id":"peas","g":15.0},{"id":"avocado","g":10.0},{"id":"cabbage","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":false,"oilG":0.05,"note":"","mod":true},{"id":"D+174","n":14,"week":2,"short":"D+174","iso":"2026-11-22","dateLabel":"11/22","dow":"일","menu":"파스닙아보카도소고기 퓨레","items":[{"id":"parsnip","g":30.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":false,"oilG":0.05,"note":"","mod":true},{"id":"D+175","n":15,"week":2,"short":"D+175","iso":"2026-11-23","dateLabel":"11/23","dow":"월","menu":"단호박파스닙소고기 퓨레","items":[{"id":"kabocha","g":30.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+176","n":16,"week":2,"short":"D+176","iso":"2026-11-24","dateLabel":"11/24","dow":"화","menu":"단호박파스닙소고기 퓨레","items":[{"id":"kabocha","g":30.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+177","n":17,"week":2,"short":"D+177","iso":"2026-11-25","dateLabel":"11/25","dow":"수","menu":"단호박파스닙소고기 퓨레","items":[{"id":"kabocha","g":30.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+178","n":18,"week":2,"short":"D+178","iso":"2026-11-26","dateLabel":"11/26","dow":"목","menu":"콜리플라워단호박파스닙소고기 퓨레","items":[{"id":"cauliflower","g":15.0},{"id":"kabocha","g":15.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+179","n":19,"week":2,"short":"D+179","iso":"2026-11-27","dateLabel":"11/27","dow":"금","menu":"콜리플라워단호박파스닙소고기 퓨레","items":[{"id":"cauliflower","g":15.0},{"id":"kabocha","g":15.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+180","n":20,"week":2,"short":"D+180","iso":"2026-11-28","dateLabel":"11/28","dow":"토","menu":"콜리플라워단호박파스닙소고기 퓨레","items":[{"id":"cauliflower","g":15.0},{"id":"kabocha","g":15.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+181","n":21,"week":3,"short":"D+181","iso":"2026-11-29","dateLabel":"11/29","dow":"일","menu":"당근소고기 퓨레","items":[{"id":"carrot","g":30.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+182","n":22,"week":3,"short":"D+182","iso":"2026-11-30","dateLabel":"11/30","dow":"월","menu":"당근소고기 퓨레","items":[{"id":"carrot","g":30.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+183","n":23,"week":3,"short":"D+183","iso":"2026-12-01","dateLabel":"12/1","dow":"화","menu":"무소고기 퓨레","items":[{"id":"radish","g":30.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+184","n":24,"week":3,"short":"D+184","iso":"2026-12-02","dateLabel":"12/2","dow":"수","menu":"무소고기 퓨레","items":[{"id":"radish","g":30.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+185","n":25,"week":3,"short":"D+185","iso":"2026-12-03","dateLabel":"12/3","dow":"목","menu":"당근무소고기 퓨레","items":[{"id":"carrot","g":15.0},{"id":"radish","g":15.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+186","n":26,"week":3,"short":"D+186","iso":"2026-12-04","dateLabel":"12/4","dow":"금","menu":"당근무소고기 퓨레","items":[{"id":"carrot","g":15.0},{"id":"radish","g":15.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+187","n":27,"week":3,"short":"D+187","iso":"2026-12-05","dateLabel":"12/5","dow":"토","menu":"당근무소고기 퓨레","items":[{"id":"carrot","g":15.0},{"id":"radish","g":15.0},{"id":"beef","g":10.0},{"id":"parsnip","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":true}],"foods":[{"id":"zucchini","name":"애호박","state":"삶거나 찐 것","group":"veg","kcal":15.0,"carb":2.69,"prot":1.14,"fat":0.36,"sat":0.072,"mono":0.029,"poly":0.151,"source":"USDA FoodData Central 169292 (SR Legacy)","defaultG":20,"split":false},{"id":"cabbage","name":"양배추","state":"삶거나 찐 것","group":"veg","kcal":23.0,"carb":5.51,"prot":1.27,"fat":0.06,"sat":0.0,"mono":0.019,"poly":0.023,"source":"USDA FoodData Central 169976 (SR Legacy)","defaultG":20,"split":false},{"id":"cauliflower","name":"콜리플라워","state":"삶거나 찐 것","group":"veg","kcal":23.0,"carb":4.11,"prot":1.84,"fat":0.45,"sat":0.07,"mono":0.032,"poly":0.217,"source":"USDA FoodData Central 170397 (SR Legacy)","defaultG":20,"split":false},{"id":"carrot","name":"당근","state":"삶거나 찐 것","group":"veg","kcal":35.0,"carb":8.22,"prot":0.76,"fat":0.18,"sat":0.03,"mono":0.006,"poly":0.089,"source":"USDA FoodData Central 170394 (SR Legacy)","defaultG":20,"split":false},{"id":"broccoli","name":"브로콜리","state":"삶거나 찐 것","group":"veg","kcal":35.0,"carb":7.2,"prot":2.4,"fat":0.4,"sat":0.08,"mono":0.03,"poly":0.18,"source":"USDA FoodData Central 169967 (SR Legacy)","defaultG":15,"split":false},{"id":"onion","name":"양파","state":"찐 것","group":"veg","kcal":44.0,"carb":10.2,"prot":1.36,"fat":0.19,"sat":0.031,"mono":0.027,"poly":0.073,"source":"USDA FoodData Central 170001 (SR Legacy)","defaultG":10,"split":false},{"id":"radish","name":"무","state":"삶은 것 (동양무)","group":"veg","kcal":17.0,"carb":3.43,"prot":0.67,"fat":0.24,"sat":0.073,"mono":0.04,"poly":0.108,"source":"USDA FoodData Central 168452 (SR Legacy · Radishes, oriental, cooked, boiled, drained, without salt)","defaultG":15,"split":false},{"id":"spinach","name":"시금치","state":"데친 것","group":"veg","kcal":23.0,"carb":3.75,"prot":2.97,"fat":0.26,"sat":0.04,"mono":0.01,"poly":0.11,"source":"USDA FoodData Central 168463 (SR Legacy)","defaultG":10,"split":false},{"id":"parsnip","name":"파스닙","state":"삶거나 찐 것","group":"veg","kcal":71.0,"carb":17.01,"prot":1.32,"fat":0.3,"sat":0.05,"mono":0.112,"poly":0.047,"source":"USDA FoodData Central 170009 (SR Legacy)","defaultG":15,"split":false},{"id":"rice_misu","name":"쌀미음","state":"10배죽 · 익힌 것","group":"carb","kcal":33.18,"carb":7.27,"prot":0.648,"fat":0.06,"sat":0.016,"mono":0.019,"poly":0.016,"source":"계산값 · 백미 USDA 169756 (백미 1 : 물 10)","defaultG":20,"split":false},{"id":"rice_jinjuk","name":"쌀죽(진죽)","state":"5배죽 · 익힌 것","group":"carb","kcal":60.83,"carb":13.33,"prot":1.188,"fat":0.11,"sat":0.03,"mono":0.034,"poly":0.029,"source":"계산값 · 백미 USDA 169756 (백미 1 : 물 5)","defaultG":20,"split":false},{"id":"rice_bap","name":"쌀밥","state":"익힌 흰쌀밥","group":"carb","kcal":130.0,"carb":28.2,"prot":2.7,"fat":0.28,"sat":0.08,"mono":0.088,"poly":0.076,"source":"USDA FoodData Central 169757 (SR Legacy)","defaultG":20,"split":false},{"id":"potato","name":"감자","state":"껍질 벗겨 삶거나 찐 것","group":"carb","kcal":86.0,"carb":20.0,"prot":1.71,"fat":0.1,"sat":0.026,"mono":0.002,"poly":0.043,"source":"USDA FoodData Central 170440 (SR Legacy)","defaultG":20,"split":false},{"id":"sweetpotato","name":"고구마","state":"찐 것 (국내산 고구마 기준)","group":"carb","kcal":163.0,"carb":39.41,"prot":1.08,"fat":0.15,"sat":0.06,"mono":0.0,"poly":0.08,"source":"농촌진흥청 국가표준식품성분표 (고구마, 찐것)","defaultG":20,"split":false},{"id":"kabocha","name":"단호박","state":"찐 것","group":"carb","kcal":66.0,"carb":15.45,"prot":1.72,"fat":0.84,"sat":0.14,"mono":0.31,"poly":0.36,"source":"농촌진흥청 국가표준식품성분표 (호박, 단호박, 찐것)","defaultG":20,"split":true},{"id":"oats","name":"오트밀","state":"익힌 것 (물로 조리)","group":"carb","kcal":71.0,"carb":12.0,"prot":2.54,"fat":1.52,"sat":0.31,"mono":0.435,"poly":0.559,"source":"USDA FoodData Central 173905 (SR Legacy)","defaultG":20,"split":false},{"id":"beef","name":"소고기","state":"삶은 우둔·안심 살코기","group":"protein","kcal":163.0,"carb":0.0,"prot":29.9,"fat":3.9,"sat":1.4,"mono":1.6,"poly":0.3,"source":"USDA FoodData Central 170633 (SR Legacy)","defaultG":10,"split":false},{"id":"chicken","name":"닭안심","state":"삶은 것","group":"protein","kcal":151.0,"carb":0.0,"prot":29.0,"fat":3.03,"sat":0.85,"mono":1.03,"poly":0.66,"source":"USDA FoodData Central 171478 (SR Legacy)","defaultG":10,"split":false},{"id":"tofu","name":"두부","state":"생 두부 (단단한 것)","group":"protein","kcal":144.0,"carb":2.78,"prot":17.3,"fat":8.72,"sat":1.26,"mono":1.91,"poly":4.92,"source":"USDA FoodData Central 172475 (SR Legacy)","defaultG":15,"split":false},{"id":"peas","name":"완두콩","state":"삶거나 찐 퓨레","group":"protein","kcal":84.0,"carb":15.6,"prot":5.36,"fat":0.22,"sat":0.039,"mono":0.019,"poly":0.102,"source":"USDA FoodData Central 170420 (SR Legacy)","defaultG":15,"split":false},{"id":"pea_cube","name":"완두콩 큐브","state":"베리네이처 2단계 (찐 뒤 급속냉동)","group":"protein","kcal":125.0,"carb":22.0,"prot":7.0,"fat":0.8,"sat":0.0,"mono":0.4,"poly":0.4,"source":"식약처 공공데이터 · 베리네이처 유기농 다진완두콩 45g","defaultG":15,"split":true},{"id":"eggyolk","name":"계란노른자","state":"삶은 것","group":"protein","kcal":322.0,"carb":3.59,"prot":15.86,"fat":26.54,"sat":9.551,"mono":11.738,"poly":4.204,"source":"USDA FoodData Central 172184 (SR Legacy)","defaultG":5,"split":false},{"id":"avocado","name":"아보카도","state":"생과육 (익히지 않음)","group":"fat","kcal":160.0,"carb":8.53,"prot":2.0,"fat":14.7,"sat":2.126,"mono":9.799,"poly":1.816,"source":"USDA FoodData Central 171705 (SR Legacy)","defaultG":10,"split":false},{"id":"oliveoil","name":"올리브오일","state":"엑스트라버진 생오일","group":"fat","kcal":884.0,"carb":0.0,"prot":0.0,"fat":100.0,"sat":13.8,"mono":73.0,"poly":10.5,"source":"USDA FoodData Central 171413 (SR Legacy)","defaultG":0.05,"split":false},{"id":"water","name":"물","state":"끓인 물 또는 분유","group":"water","kcal":0.0,"carb":0.0,"prot":0.0,"fat":0.0,"sat":0.0,"mono":0.0,"poly":0.0,"source":"열량 없음","defaultG":15,"split":false}],"memos":["<b>아보카도가 들어가는 날(D+169~174)은 올리브오일을 빼고</b>, 나머지 모든 날(D+160~168, D+175~187)은 0.05g(1방울)을 넣습니다. 불포화지방이 겹치는 것을 피하려는 기준이에요.","아보카도는 익히지 않고 <b>먹이기 직전에 생으로 으깨</b> 섞습니다. 완두콩은 껍질을 제거해 곱게 갈아 주세요.","파스닙은 두꺼운 껍질과 가운데 질긴 심을 도려내 푹 찐 뒤 <b>쌀(5배죽 진죽)과 함께</b> 갈아 1회 60g으로 맞춥니다. 묽기가 필요하면 물(또는 분유)로 조절하고, 철분 보완을 위해 <b>소고기 10g을 함께</b> 넣습니다. 첫 1~2끼는 변 상태를 확인하세요.","<b>3·4주차는 쌀을 빼지 않고 파스닙과 병행</b>합니다(파스닙 10g + 쌀 10g). 3주차는 파스닙(D+174) → 단호박(D+175) → 콜리플라워(D+178), 4주차는 당근(D+181, 만 6개월 이후) → 무(D+183) 순서로 새 재료를 하나씩 넣었습니다.","채소 퓨레는 조리 후 바로 식혀 냉동 큐브로 보관하고, <b>해동 후 24시간 내</b>에 소비합니다.","감자는 리아가 텁텁한 식감을 싫어해서(11/17 기록) 애호박·양배추와 섞어 주는 편이 잘 먹습니다.","당근·시금치는 고질산염 채소라 만 6개월(12/2) 이전에는 보류하고, 4주차(D+181~)부터 넣습니다.","콜리플라워는 가스가 찰 수 있어 첫 1~2끼 변·복부 상태를 확인합니다.","<b>새 재료는 하루에 하나만</b> 추가해야 반응이 왔을 때 원인을 구분할 수 있습니다. 앱에서 재료와 g수를 직접 바꿔 시뮬레이션할 수 있어요.","단호박·고구마는 국내산 <b>찐것</b> 기준입니다. 수분이 적어 100g당 열량이 높으니 물 15~20g로 묽기를 맞춰 주세요.","베리네이처 유기농 다진완두콩 큐브는 <b>단완두콩 100%</b>를 찐 뒤 급속냉동한 제품(식약처 공공데이터 100g당 125kcal)입니다. 물에 삶은 원물 퓨레(84kcal/100g)보다 수분이 적어 같은 무게에서 열량이 높습니다.","쌀은 기본 <b>5배죽(진죽)</b> 기준이고, 앱에서 미음(10배죽)·쌀밥으로 바꿔 비교할 수 있습니다.","<b>메뉴 이름은 카드 위 ✏️ 수정</b>으로 직접 바꿀 수 있어요. 바꾼 이름은 이 기기에만 저장되고, <b>기본값 복원</b>을 누르면 원래 이름으로 돌아갑니다."],"meta":{"subject":"리아","birth":null,"range":"D+160 ~ D+187","start":"2026-11-08","end":"2026-12-05","generated":"2026-11-19"}};
 
 const FOOD = new Map(DATA.foods.map(f => [f.id, f]));
 const DAY = new Map(DATA.days.map(d => [d.id, d]));
 const DAY_IDS = DATA.days.map(d => d.id);
 const STORE_KEY = 'lia.mealplan.v1';
+const STATE_V = 2;              // v2: 메뉴 이름 직접 수정 + 3·4주차 확정 식단
+const REVISED_FROM = 14;        // D+174~ (n>=14) = 2026-11-19 확정 식단으로 교체된 구간
 
 /* ---------- 작은 도구 ---------- */
 const $ = (sel, root) => (root || document).querySelector(sel);
@@ -440,30 +457,60 @@ function weekIndexOf(dayId) {
   const d = DAY.get(dayId);
   return d ? d.week : 0;
 }
+function cloneItems(items) {
+  return (items || []).map(it => ({ id: it.id, g: it.g }));
+}
+function cloneDay(d) {
+  return {
+    items: cloneItems(d.items),
+    oil: { on: !!d.oil, g: d.oilG },
+    done: !!d.done,
+    reaction: { like: '', stool: '', memo: '' },
+    menu: ''
+  };
+}
 function defaultState() {
   const days = {};
   const iso = todayISO();
   DATA.days.forEach(d => {
     days[d.id] = {
-      items: d.items.map(it => ({ id: it.id, g: it.g })),
+      items: cloneItems(d.items),
       oil: { on: !!d.oil, g: d.oilG },
       done: d.iso < iso,
-      reaction: { like: '', stool: '', memo: '' }
+      reaction: { like: '', stool: '', memo: '' },
+      menu: ''
     };
   });
   const day = pickToday();
-  return { v: 1, days: days, ui: { week: weekIndexOf(day), day: day } };
+  return { v: STATE_V, days: days, ui: { week: weekIndexOf(day), day: day } };
 }
 
 let state = defaultState();
 
+/* 사용자가 바꿔 둔 메뉴 이름 (없으면 원래 이름) */
+function menuOf(id) {
+  const d = DAY.get(id);
+  if (!d) return '';
+  const st = state.days && state.days[id];
+  const custom = st && typeof st.menu === 'string' ? st.menu.trim() : '';
+  return custom || d.menu;
+}
+
 function normalizeState(s) {
   if (!s || typeof s !== 'object' || !s.days) return null;
+  const legacy = !(typeof s.v === 'number' && s.v >= STATE_V);
   const base = defaultState();
   DAY_IDS.forEach(id => {
     const src = s.days[id];
-    if (!src) { s.days[id] = base.days[id]; return; }
-    if (!Array.isArray(src.items)) src.items = base.days[id].items;
+    const b = base.days[id];
+    if (!src) { s.days[id] = b; return; }
+    if (legacy && DAY.get(id).n >= REVISED_FROM) {
+      // 구버전(v1) 데이터: D+174~ 기본 식단은 이번 확정안으로 교체하고
+      // D+160~173의 먹임 체크·반응·메모와 이 구간의 기록은 그대로 살린다.
+      src.items = cloneItems(b.items);
+      src.oil = { on: b.oil.on, g: b.oil.g };
+    }
+    if (!Array.isArray(src.items)) src.items = cloneItems(b.items);
     src.items = src.items
       .filter(it => it && FOOD.has(it.id))
       .map(it => ({ id: it.id, g: clamp(num(it.g), 0, 500) }));
@@ -475,22 +522,27 @@ function normalizeState(s) {
     src.reaction.like = src.reaction.like || '';
     src.reaction.stool = src.reaction.stool || '';
     src.reaction.memo = typeof src.reaction.memo === 'string' ? src.reaction.memo : '';
+    src.menu = typeof src.menu === 'string' ? src.menu.replace(/\s+/g, ' ').trim().slice(0, 40) : '';
+    if (src.menu === DAY.get(id).menu) src.menu = '';
   });
   Object.keys(s.days).forEach(k => { if (!DAY.has(k)) delete s.days[k]; });
   if (!s.ui) s.ui = base.ui;
   if (!DAY.has(s.ui.day)) s.ui.day = base.ui.day;
   if (typeof s.ui.week !== 'number' || s.ui.week < 0 || s.ui.week > 3) s.ui.week = weekIndexOf(s.ui.day);
-  s.v = 1;
+  s.v = STATE_V;
   return s;
 }
 
 function loadState() {
   try {
     const raw = localStorage.getItem(STORE_KEY);
-    if (!raw) return;
-    const parsed = normalizeState(JSON.parse(raw));
-    if (parsed) state = parsed;
+    if (!raw) return false;
+    const parsed = JSON.parse(raw);
+    const migrated = !parsed || typeof parsed.v !== 'number' || parsed.v < STATE_V;
+    const next = normalizeState(parsed);
+    if (next) { state = next; return migrated; }
   } catch (e) { /* 저장소를 못 쓰면 기본값으로 진행 */ }
+  return false;
 }
 
 let saveTimer = null;
@@ -600,6 +652,7 @@ function renderDayCard() {
   const st = state.days[id];
   const c = computeDay(id);
   const oilOn = st.oil && st.oil.on;
+  const menuName = menuOf(id);
   const reactChips = (list, field) => list.map(([v, label]) =>
     `<button class="pill" type="button" data-act="react" data-field="${field}" data-v="${v}"
       aria-pressed="${st.reaction[field] === v}">${label}</button>`).join('');
@@ -607,10 +660,22 @@ function renderDayCard() {
   const riceId = (st.items.find(it => VARIANT_GROUPS[0].ids.indexOf(it.id) >= 0) || {}).id;
   const peaId = (st.items.find(it => VARIANT_GROUPS[1].ids.indexOf(it.id) >= 0) || {}).id;
 
+  const menuBlock = editingMenu
+    ? `<div class="menu-edit">
+         <input id="menuInput" type="text" maxlength="40" value="${esc(menuDraft)}"
+           data-act="menuinput" aria-label="메뉴 이름 입력" enterkeyhint="done" autocomplete="off">
+         <div class="btns">
+           <button class="hbtn primary" type="button" data-act="menusave">저장</button>
+           <button class="hbtn" type="button" data-act="menucancel">취소</button>
+         </div>
+       </div>`
+    : `<div class="menu">${esc(menuName)}</div>
+       <button class="editbtn" type="button" data-act="menuedit" aria-label="메뉴 이름 수정">✏️ 수정</button>`;
+
   $('#dayCard').innerHTML = `
     <div class="daytop">
-      <div>
-        <div class="menu">${esc(d.menu)}</div>
+      <div class="menuwrap">
+        <div class="menuline">${menuBlock}</div>
         <div class="dmeta">${d.short} · ${d.dateLabel} (${d.dow}) ${d.mod ? '<span class="chip" style="margin-left:6px">수정</span>' : ''}</div>
       </div>
       <button class="donebtn" type="button" data-act="done" aria-pressed="${!!st.done}">${st.done ? '✓ 먹임 완료' : '먹임 완료로 표시'}</button>
@@ -651,6 +716,49 @@ function renderDayCard() {
       <button class="hbtn" type="button" data-act="reset" style="padding:5px 10px;font-size:11.5px">기본값 복원</button>
     </div>
   `;
+
+  if (editingMenu) {
+    const inp = $('#menuInput');
+    if (inp) {
+      try { inp.focus(); if (inp.select) inp.select(); } catch (e) {}
+    }
+  }
+}
+
+/* ---------- 메뉴 이름 직접 수정 ---------- */
+let editingMenu = false;
+let menuDraft = '';
+
+function startMenuEdit() {
+  editingMenu = true;
+  menuDraft = menuOf(state.ui.day);
+  renderDayCard();
+}
+function cancelMenuEdit() {
+  editingMenu = false;
+  menuDraft = '';
+  renderDayCard();
+}
+function saveMenuEdit() {
+  const id = state.ui.day;
+  const st = state.days[id];
+  const d = DAY.get(id);
+  const inp = $('#menuInput');
+  const raw = inp && typeof inp.value === 'string' ? inp.value : menuDraft;
+  const v = String(raw || '').replace(/\s+/g, ' ').trim().slice(0, 40);
+  editingMenu = false;
+  menuDraft = '';
+  st.menu = (!v || v === d.menu) ? '' : v;
+  saveNow();
+  renderAll();
+  toast(st.menu ? '메뉴 이름을 바꿨어요' : '기본 메뉴 이름으로 되돌렸어요');
+}
+function setMenuName(id, name) {
+  if (!DAY.has(id) || !state.days[id]) return false;
+  const v = String(name == null ? '' : name).replace(/\s+/g, ' ').trim().slice(0, 40);
+  state.days[id].menu = (!v || v === DAY.get(id).menu) ? '' : v;
+  saveNow();
+  return true;
 }
 
 function riceHintText(id) {
@@ -827,6 +935,8 @@ function renderLive() {
 /* ---------- 동작 ---------- */
 function setDay(id) {
   if (!DAY.has(id)) return;
+  editingMenu = false;
+  menuDraft = '';
   state.ui.day = id;
   state.ui.week = DAY.get(id).week;
   saveState();
@@ -895,15 +1005,18 @@ function toggleDone() {
 function resetDay() {
   const id = state.ui.day;
   const base = DATA.days.find(d => d.id === id);
+  editingMenu = false;
+  menuDraft = '';
   state.days[id] = {
     items: base.items.map(it => ({ id: it.id, g: it.g })),
     oil: { on: !!base.oil, g: base.oilG },
     done: state.days[id].done,
-    reaction: state.days[id].reaction
+    reaction: state.days[id].reaction,
+    menu: ''
   };
-  saveState();
+  saveNow();
   renderAll();
-  toast('이 날 식단을 기본값으로 되돌렸어요');
+  toast('이 날 식단과 메뉴 이름을 기본값으로 되돌렸어요');
 }
 function switchVariant(groupLabel, id) {
   const group = VARIANT_GROUPS.find(g => g.label === groupLabel);
@@ -961,6 +1074,8 @@ function bindEvents() {
     const act = t.getAttribute('data-act');
     const st = state.days[state.ui.day];
     if (act === 'week') {
+      editingMenu = false;
+      menuDraft = '';
       state.ui.week = parseInt(t.getAttribute('data-week'), 10) || 0;
       const first = DATA.days.find(d => d.week === state.ui.week);
       if (first) state.ui.day = first.id;
@@ -968,6 +1083,12 @@ function bindEvents() {
       renderAll();
     } else if (act === 'day') {
       setDay(t.getAttribute('data-day'));
+    } else if (act === 'menuedit') {
+      startMenuEdit();
+    } else if (act === 'menusave') {
+      saveMenuEdit();
+    } else if (act === 'menucancel') {
+      cancelMenuEdit();
     } else if (act === 'step') {
       stepGram(parseInt(t.getAttribute('data-idx'), 10), num(t.getAttribute('data-d')));
     } else if (act === 'del') {
@@ -1028,6 +1149,18 @@ function bindEvents() {
     }
   });
 
+  document.addEventListener('keydown', ev => {
+    const t = ev.target;
+    if (!t || !t.getAttribute || t.getAttribute('data-act') !== 'menuinput') return;
+    if (ev.key === 'Enter') {
+      ev.preventDefault();
+      saveMenuEdit();
+    } else if (ev.key === 'Escape') {
+      ev.preventDefault();
+      cancelMenuEdit();
+    }
+  });
+
   $('#btnToday').addEventListener('click', () => {
     const id = pickToday();
     setDay(id);
@@ -1048,14 +1181,16 @@ function storageAvailable() {
 }
 
 function boot() {
-  loadState();
+  const migrated = loadState();
   renderDB();
   bindEvents();
   renderAll();
+  if (migrated) saveNow();
   if (!storageAvailable()) {
     const n = $('#saveNote');
     if (n) n.classList.add('show');
   }
+  if (migrated) toast('식단표를 새 버전으로 바꿨어요 — D+160~173 기록은 그대로예요');
 }
 
 if (typeof window !== 'undefined' && window.__TEST__) {
@@ -1064,7 +1199,9 @@ if (typeof window !== 'undefined' && window.__TEST__) {
     getState: () => state,
     setState: s => { state = normalizeState(s) || defaultState(); },
     computeDay, zero, addNut, defaultState, normalizeState, pickToday,
-    renderAll, renderLive, renderDayCard, setDay, stepGram, addItem, delItem, resetDay, switchVariant, boot, saveNow
+    renderAll, renderLive, renderDayCard, setDay, stepGram, addItem, delItem, resetDay, switchVariant, boot, saveNow,
+    menuOf, startMenuEdit, saveMenuEdit, cancelMenuEdit, setMenuName,
+    isEditingMenu: () => editingMenu
   };
 } else if (typeof document !== 'undefined' && document.getElementById('dayCard')) {
   boot();
