@@ -117,6 +117,7 @@ ul{margin:0;padding:0;list-style:none}
 /* ---------- day card ---------- */
 .daytop{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}
 .menuwrap{flex:1 1 190px;min-width:0}
+.daytop.editing .menuwrap{flex:1 1 100%}
 .menuline{display:flex;align-items:flex-start;gap:7px}
 .daytop .menu{font-size:19px;font-weight:750;letter-spacing:-.02em;line-height:1.25;flex:1 1 auto;min-width:0;word-break:keep-all;overflow-wrap:anywhere}
 .daytop .dmeta{font-size:12px;color:var(--muted);margin-top:3px}
@@ -673,7 +674,7 @@ function renderDayCard() {
        <button class="editbtn" type="button" data-act="menuedit" aria-label="메뉴 이름 수정">✏️ 수정</button>`;
 
   $('#dayCard').innerHTML = `
-    <div class="daytop">
+    <div class="daytop${editingMenu ? ' editing' : ''}">
       <div class="menuwrap">
         <div class="menuline">${menuBlock}</div>
         <div class="dmeta">${d.short} · ${d.dateLabel} (${d.dow}) ${d.mod ? '<span class="chip" style="margin-left:6px">수정</span>' : ''}</div>
