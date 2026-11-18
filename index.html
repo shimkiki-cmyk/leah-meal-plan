@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="리아 이유식">
+<meta name="theme-color" content="#FBF6EF">
+<title>리아 이유식 식단표 · D+160~D+187</title>
+<style>
+:root{
+  --cream:#FBF6EF;
+  --cream2:#F6EDDF;
+  --card:#FFFDF9;
+  --terra:#C0703F;
+  --terra-d:#A2572C;
+  --terra-l:#E8C9A8;
+  --ink:#33291F;
+  --ink-2:#4A3C2E;
+  --muted:#8A7860;
+  --line:#E7DAC8;
+  --line-2:#F0E6D7;
+  --carb:#E0A96D;
+  --prot:#C0703F;
+  --fat:#8A7351;
+  --sat:#B4573C;
+  --unsat:#8FA97B;
+  --water:#9DB4C0;
+  --ok:#5F8A5B;
+  --radius:18px;
+  --shadow:0 1px 2px rgba(80,58,36,.05), 0 6px 18px rgba(80,58,36,.05);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",system-ui,"Segoe UI",Roboto,sans-serif;
+  font-size:15px;
+  line-height:1.45;
+  -webkit-text-size-adjust:100%;
+}
+button{font-family:inherit;font-size:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+h1,h2,h3,h4{margin:0;font-weight:700;letter-spacing:-.01em}
+ul{margin:0;padding:0;list-style:none}
+.wrap{max-width:1100px;margin:0 auto;padding:14px 12px 72px}
+
+/* ---------- header ---------- */
+.appbar{
+  background:linear-gradient(180deg,#FFFDF9 0%, #FBF6EF 100%);
+  border-bottom:1px solid var(--line-2);
+  padding:16px 12px 12px;
+}
+.appbar-in{max-width:1100px;margin:0 auto;display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.eyebrow{font-size:12px;letter-spacing:.08em;color:var(--terra);font-weight:700;text-transform:uppercase}
+.appbar h1{font-size:23px;line-height:1.15;margin-top:2px}
+.appbar .sub{font-size:12.5px;color:var(--muted);margin-top:5px}
+.appbar .spacer{flex:1}
+.hbtns{display:flex;gap:6px;flex-wrap:wrap}
+.hbtn{
+  border:1px solid var(--line);background:var(--card);border-radius:999px;
+  padding:7px 12px;font-size:12.5px;font-weight:600;color:var(--ink-2);
+  display:inline-flex;align-items:center;gap:4px;min-height:34px;
+}
+.hbtn:active{background:var(--cream2)}
+.hbtn.primary{background:var(--terra);border-color:var(--terra);color:#fff}
+
+/* ---------- week tabs ---------- */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:12px 2px 4px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:1 1 auto;min-width:72px;max-width:180px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);
+  border-radius:999px;padding:7px 8px;font-size:12.5px;font-weight:650;line-height:1.2;
+  display:flex;flex-direction:column;align-items:center;gap:1px;white-space:nowrap;
+}
+.tab small{font-size:10px;font-weight:500;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--terra);border-color:var(--terra);color:#fff}
+.tab[aria-selected="true"] small{color:#FBEDE2}
+
+/* ---------- day strip ---------- */
+.stripwrap{position:relative}
+.strip{display:flex;gap:7px;overflow-x:auto;padding:8px 2px 10px;scrollbar-width:none;scroll-behavior:smooth}
+.strip::-webkit-scrollbar{display:none}
+.daychip{
+  flex:0 0 auto;width:72px;border:1px solid var(--line);background:var(--card);border-radius:14px;
+  padding:8px 6px 7px;display:flex;flex-direction:column;align-items:center;gap:2px;
+  position:relative;transition:transform .08s;
+}
+.daychip:active{transform:scale(.97)}
+.daychip .dn{font-size:12px;font-weight:700;color:var(--terra-d)}
+.daychip .dd{font-size:10.5px;color:var(--muted)}
+.daychip .dk{font-size:11px;font-weight:650;color:var(--ink-2);margin-top:2px}
+.daychip .marks{display:flex;gap:3px;margin-top:3px;height:8px}
+.daychip i{width:6px;height:6px;border-radius:50%;display:block;background:var(--line)}
+.daychip i.on{background:var(--ok)}
+.daychip i.memo{background:var(--terra)}
+.daychip[aria-current="true"]{border-color:var(--terra);background:#FFF6EC;box-shadow:0 0 0 2px rgba(192,112,63,.16)}
+.daychip[aria-current="true"] .dn{color:var(--terra)}
+.daychip.today::after{content:"오늘";position:absolute;top:-7px;right:-2px;background:var(--ink);color:#fff;font-size:9px;font-weight:700;border-radius:999px;padding:2px 6px}
+
+/* ---------- layout ---------- */
+.grid{display:block}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px;margin-top:12px;box-shadow:var(--shadow);
+}
+.card-h{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.card-h h2{font-size:14px;color:var(--ink)}
+.card-h .tag{margin-left:auto;font-size:11px;color:var(--muted)}
+@media (min-width:880px){
+  .grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:14px;align-items:start}
+  .grid > .col{min-width:0}
+  .card{margin-top:14px}
+}
+
+/* ---------- day card ---------- */
+.daytop{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.daytop .menu{font-size:19px;font-weight:750;letter-spacing:-.02em;line-height:1.25;flex:1;min-width:170px}
+.daytop .dmeta{font-size:12px;color:var(--muted);margin-top:3px}
+.chip{
+  display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 9px;
+  font-size:11px;font-weight:700;background:var(--cream2);color:var(--terra-d);border:1px solid var(--line)
+}
+.chip.solid{background:var(--terra);color:#fff;border-color:var(--terra)}
+.chip.ok{background:#EAF1E7;color:#41613D;border-color:#CFE0C8}
+.donebtn{
+  border:1px solid var(--line);border-radius:12px;padding:8px 11px;font-size:12.5px;font-weight:700;
+  background:var(--card);color:var(--muted);min-height:40px;white-space:nowrap
+}
+.donebtn[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+
+.sec-t{font-size:12px;font-weight:750;color:var(--terra-d);letter-spacing:.02em;margin:16px 0 6px;display:flex;align-items:center;gap:6px}
+.sec-t::after{content:"";flex:1;height:1px;background:var(--line-2)}
+
+/* ingredient rows */
+.ing{border-bottom:1px solid var(--line-2);padding:9px 0}
+.ing:last-child{border-bottom:0}
+.ing-top{display:flex;align-items:center;gap:8px}
+.ing-name{font-size:14px;font-weight:650;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap;flex:1;min-width:0}
+.ing-name .st{font-size:10.5px;color:var(--muted);font-weight:500}
+.ing-name .kcal{font-size:10.5px;color:var(--muted);font-weight:500}
+.del{width:30px;height:30px;border-radius:9px;color:#B9A48C;font-size:15px;line-height:1;display:grid;place-items:center;border:1px solid transparent}
+.del:active{background:#F7E8DE;color:var(--terra)}
+.stepper{display:flex;align-items:center;gap:5px;margin-top:7px;justify-content:space-between}
+.stepper button{
+  height:38px;min-width:44px;border-radius:11px;border:1px solid var(--line);background:#FFF8F0;
+  font-size:13px;font-weight:700;color:var(--terra-d)
+}
+.stepper button:active{background:var(--cream2)}
+.stepper .gbox{display:flex;align-items:center;gap:2px;flex:0 1 122px;min-width:78px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:0 8px;height:38px}
+.stepper input{
+  width:100%;border:0;background:transparent;text-align:right;font-weight:750;font-size:16px;
+  -webkit-appearance:none;appearance:none;padding:0;min-width:0
+}
+.stepper input:focus{outline:none}
+.stepper .unit{font-size:11.5px;color:var(--muted);font-weight:600}
+.oilrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line-2)}
+.oilrow .t{flex:1}
+.oilrow .t b{font-size:14px;font-weight:650}
+.oilrow .t div{font-size:10.5px;color:var(--muted);margin-top:2px}
+.switch{width:50px;height:30px;border-radius:999px;background:#E4D8C7;position:relative;flex:0 0 auto;transition:background .15s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18);transition:left .15s}
+.switch[aria-checked="true"]{background:var(--terra)}
+.switch[aria-checked="true"]::after{left:23px}
+.oilbox{display:none;align-items:center;gap:6px}
+.oilbox.show{display:flex}
+.oilbox input{width:62px;height:36px;border:1px solid var(--line);border-radius:10px;text-align:right;padding:0 8px;font-weight:700;-webkit-appearance:none;appearance:none}
+
+/* variant chooser */
+.variants{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px}
+.variants .lbl{font-size:11px;color:var(--muted);font-weight:650}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#fff}
+.seg button{padding:6px 10px;font-size:11.5px;font-weight:650;color:var(--muted);min-height:32px}
+.seg button[aria-pressed="true"]{background:var(--terra);color:#fff}
+
+/* add ingredient */
+.addrow{display:flex;gap:6px;margin-top:10px}
+.addrow select{
+  flex:1;height:40px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:0 9px;
+  font-size:13px;-webkit-appearance:none;appearance:none;min-width:0
+}
+.addrow button{height:40px;padding:0 14px;border-radius:11px;background:var(--terra);color:#fff;font-weight:700;font-size:13px}
+
+/* notes */
+.reactions{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.rrow{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.rrow .lbl{font-size:11.5px;color:var(--muted);font-weight:650;width:52px;flex:0 0 auto}
+.pill{border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:600;color:var(--ink-2);background:#fff;min-height:32px}
+.pill[aria-pressed="true"]{background:#FFF1E3;border-color:var(--terra);color:var(--terra-d)}
+textarea{
+  width:100%;min-height:64px;border:1px solid var(--line);border-radius:12px;padding:9px 10px;
+  font-size:13px;background:#fff;resize:vertical;line-height:1.45
+}
+textarea:focus{outline:2px solid rgba(192,112,63,.25);outline-offset:0}
+
+/* ---------- nutrition ---------- */
+.kcalbig{display:flex;align-items:flex-end;gap:6px}
+.kcalbig .n{font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:.95;color:var(--terra-d)}
+.kcalbig .u{font-size:13px;font-weight:700;color:var(--terra);padding-bottom:4px}
+.kcalbig .w{margin-left:auto;text-align:right;font-size:11.5px;color:var(--muted);line-height:1.4}
+.nutgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.nut{border:1px solid var(--line-2);border-radius:12px;padding:9px 10px;background:#FFFBF5}
+.nut .k{font-size:10.5px;color:var(--muted);font-weight:650}
+.nut .v{font-size:16px;font-weight:750;margin-top:1px}
+.nut .v span{font-size:11px;font-weight:600;color:var(--muted)}
+.bar{height:8px;border-radius:999px;background:#EFE4D4;overflow:hidden;display:flex;margin-top:8px}
+.bar i{display:block;height:100%}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:7px;font-size:11px;color:var(--muted)}
+.legend b{font-weight:700;color:var(--ink-2)}
+.legend .sw{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:3px;vertical-align:-1px}
+.macrorow{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:12.5px}
+.macrorow .nm{width:46px;color:var(--muted);font-weight:650;font-size:11.5px}
+.macrorow .gg{width:52px;text-align:right;font-weight:750}
+.macrorow .pc{width:40px;text-align:right;color:var(--muted);font-size:11px}
+.macrorow .tr{flex:1;height:7px;border-radius:999px;background:#EFE4D4;overflow:hidden}
+.macrorow .tr i{display:block;height:100%}
+.tbl{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px}
+.tbl th,.tbl td{padding:6px 4px;border-bottom:1px solid var(--line-2);text-align:right;white-space:nowrap}
+.tbl th{font-size:10.5px;color:var(--muted);font-weight:650;border-bottom:1px solid var(--line)}
+.tbl th:first-child,.tbl td:first-child{text-align:left;white-space:normal}
+.tbl td{font-weight:600}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .nm{font-weight:650;color:var(--ink)}
+.tbl .g{color:var(--muted);font-size:10.5px;font-weight:500}
+.est{color:var(--terra);font-weight:700;font-size:9.5px}
+.hint{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5}
+.checkline{display:flex;gap:6px;align-items:flex-start;margin-top:8px;font-size:10.5px;color:var(--muted)}
+
+/* ---------- chart ---------- */
+.chartbox svg{width:100%;height:auto;display:block;overflow:visible}
+.avg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.avg div{background:#FFFBF5;border:1px solid var(--line-2);border-radius:11px;padding:7px 8px}
+.avg .k{font-size:10px;color:var(--muted);font-weight:650}
+.avg .v{font-size:14px;font-weight:750;margin-top:1px}
+.avg .v small{font-size:10px;font-weight:600;color:var(--muted)}
+
+/* ---------- db panel ---------- */
+details.card{padding:0;overflow:Hidden}
+details.card > summary{
+  list-style:none;cursor:pointer;padding:14px;display:flex;align-items:center;gap:8px;font-weight:750;font-size:14px
+}
+details.card > summary::-webkit-details-marker{display:none}
+details.card > summary .arw{margin-left:auto;color:var(--muted);font-size:12px;transition:transform .15s}
+details.card[open] > summary .arw{transform:rotate(180deg)}
+.dbbody{padding:0 14px 14px}
+.dbgrid{display:grid;grid-template-columns:1fr;gap:7px;margin-top:8px}
+.dbfood{border:1px solid var(--line-2);border-radius:12px;padding:8px 10px;background:#FFFBF5}
+.dbf-head{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.dbf-head b{font-size:13.5px}
+.dbf-head .st{font-size:10.5px;color:var(--muted)}
+.dbf-head .kc{margin-left:auto;font-size:12px;font-weight:750;color:var(--terra-d);white-space:nowrap}
+.dbf-nums{font-size:11.5px;color:var(--ink-2);margin-top:3px;line-height:1.55}
+.dbf-nums i{font-style:normal;color:var(--muted)}
+.dbf-src{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.45}
+@media (min-width:700px){.dbgrid{grid-template-columns:1fr 1fr}}
+.memo{margin-top:6px}
+.memo li{position:relative;padding:7px 0 7px 18px;font-size:12.5px;border-bottom:1px solid var(--line-2);line-height:1.5;color:var(--ink-2)}
+.memo li:last-child{border-bottom:0}
+.memo li::before{content:"·";position:absolute;left:4px;color:var(--terra);font-weight:900}
+.memo li b{color:var(--ink)}
+
+/* ---------- toast ---------- */
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:rgba(51,41,31,.94);color:#fff;
+  font-size:12.5px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;
+  transition:opacity .2s,transform .2s;z-index:50;max-width:82vw;text-align:center
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.foot{text-align:center;font-size:11px;color:var(--muted);margin-top:22px;line-height:1.7}
+.notice{display:none;margin:10px 2px 0;background:#FBEEE2;border:1px solid #EBCDAF;color:#8A5A2E;border-radius:12px;padding:9px 11px;font-size:11.5px;line-height:1.5}
+.notice.show{display:block}
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible{
+  outline:2px solid rgba(192,112,63,.5);outline-offset:2px
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+
+<header class="appbar">
+  <div class="appbar-in">
+    <div>
+      <div class="eyebrow">리아 · 프랑스식 초기 이유식</div>
+      <h1>리아 이유식 식단표</h1>
+      <div class="sub" id="appSub">D+160 ~ D+187 · 28일 · 1회 고형분 45~55g (물 포함 50~65g)</div>
+    </div>
+    <div class="spacer"></div>
+    <div class="hbtns">
+      <button class="hbtn" id="btnToday" type="button">오늘로</button>
+      <button class="hbtn" id="btnExport" type="button">기록 백업</button>
+      <button class="hbtn" id="btnImport" type="button">복원</button>
+      <input type="file" id="fileImport" accept="application/json,.json" class="sr">
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="tabs" id="tabs" role="tablist" aria-label="주차 선택"></div>
+  <div class="stripwrap">
+    <div class="strip" id="strip" role="tablist" aria-label="날짜 선택"></div>
+  </div>
+
+  <div class="notice" id="saveNote">이 환경에서는 자동 저장(localStorage)이 막혀 있을 수 있어요. 상단 <b>기록 백업</b>으로 JSON을 받아 두시면 나중에 <b>복원</b>으로 그대로 되살릴 수 있어요.</div>
+
+  <div class="grid">
+    <div class="col">
+      <section class="card" id="dayCard" aria-live="polite"></section>
+    </div>
+    <div class="col">
+      <section class="card" id="nutCard"></section>
+      <section class="card" id="chartCard"></section>
+    </div>
+  </div>
+
+  <details class="card" id="dbCard">
+    <summary>영양 DB 기준 · 출처 <span class="arw">▾</span></summary>
+    <div class="dbbody" id="dbBody"></div>
+  </details>
+
+  <details class="card" id="memoCard">
+    <summary>조리 · 보관 메모 <span class="arw">▾</span></summary>
+    <div class="dbbody"><ul class="memo" id="memoList"></ul></div>
+  </details>
+
+  <details class="card" id="tipsCard">
+    <summary>사용 팁 <span class="arw">▾</span></summary>
+    <div class="dbbody"><ul class="memo">
+      <li><b>아이폰 홈 화면에 추가</b> — 사파리에서 이 파일을 연 뒤 공유 → “홈 화면에 추가”를 누르면 앱처럼 열립니다. 파일 앱에서 열 때는 공유 → 사파리로 여는 편이 안전해요.</li>
+      <li><b>먹임 완료 · 반응 기록</b> — 날짜 칩을 눌러 그 날로 가서 오른쪽 위 버튼과 반응 칩을 쓰면 자동 저장됩니다(이 기기 브라우저에만 저장).</li>
+      <li><b>재료 바꿔 보기</b> — g수는 −5/−1/+1/+5 또는 직접 입력, 재료는 아래 드롭다운으로 추가·삭제. “기본값 복원”을 누르면 그 날은 원래 식단으로 돌아갑니다.</li>
+      <li><b>쌀 농도 · 완두콩 기준</b> — 쌀이 든 날은 미음(10배)/진죽(5배)/쌀밥, 완두콩이 든 날은 원물 퓨레/베리네이처 큐브로 바꿔 열량을 비교할 수 있습니다.</li>
+      <li><b>백업</b> — 기기를 바꾸거나 브라우저 기록을 지우기 전에 “기록 백업”으로 JSON을 받아 두세요.</li>
+    </ul></div>
+  </details>
+
+  <div class="foot">
+    리아 · D+160 = 2026-11-08(일) ~ D+187 = 2026-12-05(토)<br>
+    영양 수치는 익혀서 갈아 둔 무게 기준 · 확인된 DB 값(USDA FoodData Central / 농촌진흥청 국가표준식품성분표 / 식약처 공공데이터)
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =====================================================================
+   리아 이유식 식단표 웹앱 — 데이터·계산·화면
+   외부 라이브러리 없음. 오프라인 단일 파일.
+   ===================================================================== */
+const DATA = {"weeks":[{"i":0,"label":"1주차","range":"D+160~166","tag":"원본 유지 · 이미 먹인 구간"},{"i":1,"label":"2주차","range":"D+167~173","tag":"목·금 완두콩+아보카도 · 토 양배추 추가 (55g)"},{"i":2,"label":"3주차","range":"D+174~180","tag":"청경채 → 콜리플라워 · 쌀 대신 파스닙 대체 · 물로 묽기 조절"},{"i":3,"label":"4주차","range":"D+181~187","tag":"브로콜리 → 당근(만 6개월 이후) · 쌀 대신 파스닙 대체"}],"days":[{"id":"D+160","n":0,"week":0,"short":"D+160","iso":"2026-11-08","dateLabel":"11/8","dow":"일","menu":"애호박 퓨레","items":[{"id":"zucchini","g":30.0},{"id":"water","g":20.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+161","n":1,"week":0,"short":"D+161","iso":"2026-11-09","dateLabel":"11/9","dow":"월","menu":"애호박소고기 퓨레","items":[{"id":"zucchini","g":30.0},{"id":"beef","g":5.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+162","n":2,"week":0,"short":"D+162","iso":"2026-11-10","dateLabel":"11/10","dow":"화","menu":"애호박소고기 퓨레","items":[{"id":"zucchini","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+163","n":3,"week":0,"short":"D+163","iso":"2026-11-11","dateLabel":"11/11","dow":"수","menu":"감자소고기 퓨레","items":[{"id":"potato","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"감자 식감 비선호","mod":false},{"id":"D+164","n":4,"week":0,"short":"D+164","iso":"2026-11-12","dateLabel":"11/12","dow":"목","menu":"감자소고기 퓨레","items":[{"id":"potato","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"감자 식감 비선호","mod":false},{"id":"D+165","n":5,"week":0,"short":"D+165","iso":"2026-11-13","dateLabel":"11/13","dow":"금","menu":"애호박감자소고기 퓨레","items":[{"id":"zucchini","g":15.0},{"id":"potato","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+166","n":6,"week":0,"short":"D+166","iso":"2026-11-14","dateLabel":"11/14","dow":"토","menu":"애호박감자소고기 퓨레","items":[{"id":"zucchini","g":15.0},{"id":"potato","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"","mod":false},{"id":"D+167","n":7,"week":1,"short":"D+167","iso":"2026-11-15","dateLabel":"11/15","dow":"일","menu":"양배추소고기 퓨레","items":[{"id":"cabbage","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+168","n":8,"week":1,"short":"D+168","iso":"2026-11-16","dateLabel":"11/16","dow":"월","menu":"양배추소고기 퓨레","items":[{"id":"cabbage","g":30.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":true,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+169","n":9,"week":1,"short":"D+169","iso":"2026-11-17","dateLabel":"11/17","dow":"화","menu":"양배추아보카도소고기 퓨레","items":[{"id":"cabbage","g":20.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":10.0}],"oil":false,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+170","n":10,"week":1,"short":"D+170","iso":"2026-11-18","dateLabel":"11/18","dow":"수","menu":"양배추아보카도소고기 퓨레","items":[{"id":"cabbage","g":10.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":20.0}],"oil":false,"oilG":0.05,"note":"먹임 완료","mod":false},{"id":"D+171","n":11,"week":1,"short":"D+171","iso":"2026-11-19","dateLabel":"11/19","dow":"목","menu":"완두콩아보카도소고기 퓨레","items":[{"id":"peas","g":15.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":20.0}],"oil":false,"oilG":0.05,"note":"","mod":true},{"id":"D+172","n":12,"week":1,"short":"D+172","iso":"2026-11-20","dateLabel":"11/20","dow":"금","menu":"완두콩아보카도소고기 퓨레","items":[{"id":"peas","g":15.0},{"id":"avocado","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":20.0}],"oil":false,"oilG":0.05,"note":"","mod":true},{"id":"D+173","n":13,"week":1,"short":"D+173","iso":"2026-11-21","dateLabel":"11/21","dow":"토","menu":"완두콩아보카도양배추소고기 퓨레","items":[{"id":"peas","g":15.0},{"id":"avocado","g":10.0},{"id":"cabbage","g":10.0},{"id":"beef","g":10.0},{"id":"rice_jinjuk","g":10.0}],"oil":false,"oilG":0.05,"note":"","mod":true},{"id":"D+174","n":14,"week":2,"short":"D+174","iso":"2026-11-22","dateLabel":"11/22","dow":"일","menu":"콜리플라워파스닙소고기 퓨레","items":[{"id":"cauliflower","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+175","n":15,"week":2,"short":"D+175","iso":"2026-11-23","dateLabel":"11/23","dow":"월","menu":"콜리플라워파스닙소고기 퓨레","items":[{"id":"cauliflower","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+176","n":16,"week":2,"short":"D+176","iso":"2026-11-24","dateLabel":"11/24","dow":"화","menu":"단호박파스닙소고기 퓨레","items":[{"id":"kabocha","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"물 15~20g로 조절","mod":true},{"id":"D+177","n":17,"week":2,"short":"D+177","iso":"2026-11-25","dateLabel":"11/25","dow":"수","menu":"단호박파스닙소고기 퓨레","items":[{"id":"kabocha","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"물 15~20g로 조절","mod":true},{"id":"D+178","n":18,"week":2,"short":"D+178","iso":"2026-11-26","dateLabel":"11/26","dow":"목","menu":"콜리플라워단호박파스닙소고기 퓨레","items":[{"id":"cauliflower","g":15.0},{"id":"kabocha","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+179","n":19,"week":2,"short":"D+179","iso":"2026-11-27","dateLabel":"11/27","dow":"금","menu":"콜리플라워단호박파스닙소고기 퓨레","items":[{"id":"cauliflower","g":15.0},{"id":"kabocha","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+180","n":20,"week":2,"short":"D+180","iso":"2026-11-28","dateLabel":"11/28","dow":"토","menu":"콜리플라워단호박파스닙소고기 퓨레","items":[{"id":"cauliflower","g":15.0},{"id":"kabocha","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+181","n":21,"week":3,"short":"D+181","iso":"2026-11-29","dateLabel":"11/29","dow":"일","menu":"당근파스닙소고기 퓨레","items":[{"id":"carrot","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+182","n":22,"week":3,"short":"D+182","iso":"2026-11-30","dateLabel":"11/30","dow":"월","menu":"당근파스닙소고기 퓨레","items":[{"id":"carrot","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+183","n":23,"week":3,"short":"D+183","iso":"2026-12-01","dateLabel":"12/1","dow":"화","menu":"고구마파스닙소고기 퓨레","items":[{"id":"sweetpotato","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":20.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+184","n":24,"week":3,"short":"D+184","iso":"2026-12-02","dateLabel":"12/2","dow":"수","menu":"고구마파스닙소고기 퓨레","items":[{"id":"sweetpotato","g":20.0},{"id":"parsnip","g":15.0},{"id":"beef","g":10.0},{"id":"water","g":20.0}],"oil":true,"oilG":0.05,"note":"","mod":true},{"id":"D+185","n":25,"week":3,"short":"D+185","iso":"2026-12-03","dateLabel":"12/3","dow":"목","menu":"당근고구마파스닙소고기 퓨레","items":[{"id":"carrot","g":15.0},{"id":"sweetpotato","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"물 15~20g로 조절","mod":true},{"id":"D+186","n":26,"week":3,"short":"D+186","iso":"2026-12-04","dateLabel":"12/4","dow":"금","menu":"당근고구마파스닙소고기 퓨레","items":[{"id":"carrot","g":15.0},{"id":"sweetpotato","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"물 15~20g로 조절","mod":true},{"id":"D+187","n":27,"week":3,"short":"D+187","iso":"2026-12-05","dateLabel":"12/5","dow":"토","menu":"당근고구마파스닙소고기 퓨레","items":[{"id":"carrot","g":15.0},{"id":"sweetpotato","g":15.0},{"id":"parsnip","g":10.0},{"id":"beef","g":10.0},{"id":"water","g":15.0}],"oil":true,"oilG":0.05,"note":"물 15~20g로 조절","mod":true}],"foods":[{"id":"zucchini","name":"애호박","state":"삶거나 찐 것","group":"veg","kcal":15.0,"carb":2.69,"prot":1.14,"fat":0.36,"sat":0.072,"mono":0.029,"poly":0.151,"source":"USDA FoodData Central 169292 (SR Legacy)","defaultG":20,"split":false},{"id":"cabbage","name":"양배추","state":"삶거나 찐 것","group":"veg","kcal":23.0,"carb":5.51,"prot":1.27,"fat":0.06,"sat":0.0,"mono":0.019,"poly":0.023,"source":"USDA FoodData Central 169976 (SR Legacy)","defaultG":20,"split":false},{"id":"cauliflower","name":"콜리플라워","state":"삶거나 찐 것","group":"veg","kcal":23.0,"carb":4.11,"prot":1.84,"fat":0.45,"sat":0.07,"mono":0.032,"poly":0.217,"source":"USDA FoodData Central 170397 (SR Legacy)","defaultG":20,"split":false},{"id":"carrot","name":"당근","state":"삶거나 찐 것","group":"veg","kcal":35.0,"carb":8.22,"prot":0.76,"fat":0.18,"sat":0.03,"mono":0.006,"poly":0.089,"source":"USDA FoodData Central 170394 (SR Legacy)","defaultG":20,"split":false},{"id":"broccoli","name":"브로콜리","state":"삶거나 찐 것","group":"veg","kcal":35.0,"carb":7.2,"prot":2.4,"fat":0.4,"sat":0.08,"mono":0.03,"poly":0.18,"source":"USDA FoodData Central 169967 (SR Legacy)","defaultG":15,"split":false},{"id":"onion","name":"양파","state":"찐 것","group":"veg","kcal":44.0,"carb":10.2,"prot":1.36,"fat":0.19,"sat":0.031,"mono":0.027,"poly":0.073,"source":"USDA FoodData Central 170001 (SR Legacy)","defaultG":10,"split":false},{"id":"radish","name":"무","state":"삶은 것","group":"veg","kcal":17.0,"carb":3.43,"prot":0.67,"fat":0.24,"sat":0.07,"mono":0.04,"poly":0.11,"source":"USDA FoodData Central 168452 (SR Legacy)","defaultG":15,"split":false},{"id":"spinach","name":"시금치","state":"데친 것","group":"veg","kcal":23.0,"carb":3.75,"prot":2.97,"fat":0.26,"sat":0.04,"mono":0.01,"poly":0.11,"source":"USDA FoodData Central 168463 (SR Legacy)","defaultG":10,"split":false},{"id":"parsnip","name":"파스닙","state":"삶거나 찐 것","group":"veg","kcal":71.0,"carb":17.01,"prot":1.32,"fat":0.3,"sat":0.05,"mono":0.112,"poly":0.047,"source":"USDA FoodData Central 170009 (SR Legacy)","defaultG":15,"split":false},{"id":"rice_misu","name":"쌀미음","state":"10배죽 · 익힌 것","group":"carb","kcal":33.18,"carb":7.27,"prot":0.648,"fat":0.06,"sat":0.016,"mono":0.019,"poly":0.016,"source":"계산값 · 백미 USDA 169756 (백미 1 : 물 10)","defaultG":20,"split":false},{"id":"rice_jinjuk","name":"쌀죽(진죽)","state":"5배죽 · 익힌 것","group":"carb","kcal":60.83,"carb":13.33,"prot":1.188,"fat":0.11,"sat":0.03,"mono":0.034,"poly":0.029,"source":"계산값 · 백미 USDA 169756 (백미 1 : 물 5)","defaultG":20,"split":false},{"id":"rice_bap","name":"쌀밥","state":"익힌 흰쌀밥","group":"carb","kcal":130.0,"carb":28.2,"prot":2.7,"fat":0.28,"sat":0.08,"mono":0.088,"poly":0.076,"source":"USDA FoodData Central 169757 (SR Legacy)","defaultG":20,"split":false},{"id":"potato","name":"감자","state":"껍질 벗겨 삶거나 찐 것","group":"carb","kcal":86.0,"carb":20.0,"prot":1.71,"fat":0.1,"sat":0.026,"mono":0.002,"poly":0.043,"source":"USDA FoodData Central 170440 (SR Legacy)","defaultG":20,"split":false},{"id":"sweetpotato","name":"고구마","state":"찐 것 (국내산 고구마 기준)","group":"carb","kcal":163.0,"carb":39.41,"prot":1.08,"fat":0.15,"sat":0.06,"mono":0.0,"poly":0.08,"source":"농촌진흥청 국가표준식품성분표 (고구마, 찐것)","defaultG":20,"split":false},{"id":"kabocha","name":"단호박","state":"찐 것","group":"carb","kcal":66.0,"carb":15.45,"prot":1.72,"fat":0.84,"sat":0.14,"mono":0.31,"poly":0.36,"source":"농촌진흥청 국가표준식품성분표 (호박, 단호박, 찐것)","defaultG":20,"split":true},{"id":"oats","name":"오트밀","state":"익힌 것 (물로 조리)","group":"carb","kcal":71.0,"carb":12.0,"prot":2.54,"fat":1.52,"sat":0.31,"mono":0.435,"poly":0.559,"source":"USDA FoodData Central 173905 (SR Legacy)","defaultG":20,"split":false},{"id":"beef","name":"소고기","state":"삶은 우둔·안심 살코기","group":"protein","kcal":163.0,"carb":0.0,"prot":29.9,"fat":3.9,"sat":1.4,"mono":1.6,"poly":0.3,"source":"USDA FoodData Central 170633 (SR Legacy)","defaultG":10,"split":false},{"id":"chicken","name":"닭안심","state":"삶은 것","group":"protein","kcal":151.0,"carb":0.0,"prot":29.0,"fat":3.03,"sat":0.85,"mono":1.03,"poly":0.66,"source":"USDA FoodData Central 171478 (SR Legacy)","defaultG":10,"split":false},{"id":"tofu","name":"두부","state":"생 두부 (단단한 것)","group":"protein","kcal":144.0,"carb":2.78,"prot":17.3,"fat":8.72,"sat":1.26,"mono":1.91,"poly":4.92,"source":"USDA FoodData Central 172475 (SR Legacy)","defaultG":15,"split":false},{"id":"peas","name":"완두콩","state":"삶거나 찐 퓨레","group":"protein","kcal":84.0,"carb":15.6,"prot":5.36,"fat":0.22,"sat":0.039,"mono":0.019,"poly":0.102,"source":"USDA FoodData Central 170420 (SR Legacy)","defaultG":15,"split":false},{"id":"pea_cube","name":"완두콩 큐브","state":"베리네이처 2단계 (찐 뒤 급속냉동)","group":"protein","kcal":125.0,"carb":22.0,"prot":7.0,"fat":0.8,"sat":0.0,"mono":0.4,"poly":0.4,"source":"식약처 공공데이터 · 베리네이처 유기농 다진완두콩 45g","defaultG":15,"split":true},{"id":"eggyolk","name":"계란노른자","state":"삶은 것","group":"protein","kcal":322.0,"carb":3.59,"prot":15.86,"fat":26.54,"sat":9.551,"mono":11.738,"poly":4.204,"source":"USDA FoodData Central 172184 (SR Legacy)","defaultG":5,"split":false},{"id":"avocado","name":"아보카도","state":"생과육 (익히지 않음)","group":"fat","kcal":160.0,"carb":8.53,"prot":2.0,"fat":14.7,"sat":2.126,"mono":9.799,"poly":1.816,"source":"USDA FoodData Central 171705 (SR Legacy)","defaultG":10,"split":false},{"id":"oliveoil","name":"올리브오일","state":"엑스트라버진 생오일","group":"fat","kcal":884.0,"carb":0.0,"prot":0.0,"fat":100.0,"sat":13.8,"mono":73.0,"poly":10.5,"source":"USDA FoodData Central 171413 (SR Legacy)","defaultG":0.05,"split":false},{"id":"water","name":"물","state":"끓인 물 또는 분유","group":"water","kcal":0.0,"carb":0.0,"prot":0.0,"fat":0.0,"sat":0.0,"mono":0.0,"poly":0.0,"source":"열량 없음","defaultG":15,"split":false}],"memos":["<b>아보카도가 들어가는 날(D+169~173)은 올리브오일을 빼고</b>, 나머지 모든 날(D+160~168, D+174~187)은 0.05g(1방울)을 넣습니다. 불포화지방이 겹치는 것을 피하려는 기준이에요.","아보카도는 익히지 않고 <b>먹이기 직전에 생으로 으깨</b> 섞습니다. 완두콩은 껍질을 제거해 곱게 갈아 주세요.","파스닙은 두꺼운 껍질과 가운데 질긴 심을 도려내 푹 찐 뒤 묽게 갈고, 철분 보완을 위해 <b>소고기 10g을 함께</b> 넣습니다. 첫 1~2끼는 변 상태를 확인하세요.","채소 퓨레는 조리 후 바로 식혀 냉동 큐브로 보관하고, <b>해동 후 24시간 내</b>에 소비합니다.","감자는 리아가 텁텁한 식감을 싫어해서(11/17 기록) 애호박·양배추와 섞어 주는 편이 잘 먹습니다.","당근·시금치는 고질산염 채소라 만 6개월(12/2) 이전에는 보류하고, 4주차(D+181~)부터 넣습니다.","콜리플라워는 가스가 찰 수 있어 첫 1~2끼 변·복부 상태를 확인합니다.","<b>새 재료는 하루에 하나만</b> 추가해야 반응이 왔을 때 원인을 구분할 수 있습니다. 3주차는 파스닙 → 콜리플라워 → 단호박 순서로 이틀씩 나누는 안을 검토 중입니다(앱에서 재료·g수를 직접 바꿔 시뮬레이션 가능).","단호박·고구마는 국내산 <b>찐것</b> 기준입니다. 수분이 적어 100g당 열량이 높으니 물 15~20g로 묽기를 맞춰 주세요.","베리네이처 유기농 다진완두콩 큐브는 <b>단완두콩 100%</b>를 찐 뒤 급속냉동한 제품(식약처 공공데이터 100g당 125kcal)입니다. 물에 삶은 원물 퓨레(84kcal/100g)보다 수분이 적어 같은 무게에서 열량이 높습니다.","쌀은 기본 <b>5배죽(진죽)</b> 기준이고, 앱에서 미음(10배죽)·쌀밥으로 바꿔 비교할 수 있습니다."],"meta":{"subject":"리아","birth":null,"range":"D+160 ~ D+187","start":"2026-11-08","end":"2026-12-05","generated":"2026-11-18"}};
+
+const FOOD = new Map(DATA.foods.map(f => [f.id, f]));
+const DAY = new Map(DATA.days.map(d => [d.id, d]));
+const DAY_IDS = DATA.days.map(d => d.id);
+const STORE_KEY = 'lia.mealplan.v1';
+
+/* ---------- 작은 도구 ---------- */
+const $ = (sel, root) => (root || document).querySelector(sel);
+const $$ = (sel, root) => Array.prototype.slice.call((root || document).querySelectorAll(sel));
+const num = v => { const n = parseFloat(String(v).replace(',', '.')); return isFinite(n) ? n : 0; };
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+const r1 = v => Math.round(v * 10) / 10;
+const r2 = v => Math.round(v * 100) / 100;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct = (a, b) => (b > 0 ? (a / b) * 100 : 0);
+
+function todayISO() {
+  try {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit'
+    }).format(new Date());
+  } catch (e) {
+    const t = new Date();
+    const p = n => String(n).padStart(2, '0');
+    return t.getFullYear() + '-' + p(t.getMonth() + 1) + '-' + p(t.getDate());
+  }
+}
+
+/* ---------- 계산 ---------- */
+function zero() { return { kcal: 0, carb: 0, prot: 0, fat: 0, sat: 0, mono: 0, poly: 0 }; }
+
+function addNut(acc, food, g) {
+  const k = g / 100;
+  acc.kcal += food.kcal * k;
+  acc.carb += food.carb * k;
+  acc.prot += food.prot * k;
+  acc.fat += food.fat * k;
+  acc.sat += food.sat * k;
+  acc.mono += food.mono * k;
+  acc.poly += food.poly * k;
+  return acc;
+}
+
+function computeDay(dayId) {
+  const day = DAY.get(dayId);
+  const st = state.days[dayId];
+  const t = zero();
+  const rows = [];
+  let solid = 0, water = 0;
+  st.items.forEach(it => {
+    const f = FOOD.get(it.id);
+    if (!f) return;
+    const g = num(it.g);
+    if (g <= 0) return;
+    const n = zero();
+    addNut(n, f, g);
+    if (f.id === 'water') water += g; else solid += g;
+    ['kcal','carb','prot','fat','sat','mono','poly'].forEach(k => { t[k] += n[k]; });
+    rows.push({ food: f, g: g, n: n });
+  });
+  if (st.oil && st.oil.on && num(st.oil.g) > 0) {
+    const g = num(st.oil.g);
+    const n = zero();
+    addNut(n, FOOD.get('oliveoil'), g);
+    ['kcal','carb','prot','fat','sat','mono','poly'].forEach(k => { t[k] += n[k]; });
+    solid += g;
+    rows.push({ food: FOOD.get('oliveoil'), g: g, n: n, oil: true });
+  }
+  const unsat = t.mono + t.poly;
+  const energyMacro = t.carb * 4 + t.prot * 4 + t.fat * 9;
+  return {
+    id: dayId, day: day, rows: rows, t: t,
+    solid: solid, water: water, weight: solid + water,
+    unsat: unsat, energyMacro: energyMacro,
+    kcalCarb: t.carb * 4, kcalProt: t.prot * 4, kcalFat: t.fat * 9
+  };
+}
+
+/* ---------- 상태 ---------- */
+function pickToday() {
+  const iso = todayISO();
+  let best = DAY_IDS[0];
+  for (const id of DAY_IDS) {
+    if (DAY.get(id).iso <= iso) best = id;
+  }
+  return DAY.get(best).iso === iso ? best : best;
+}
+function weekIndexOf(dayId) {
+  const d = DAY.get(dayId);
+  return d ? d.week : 0;
+}
+function defaultState() {
+  const days = {};
+  const iso = todayISO();
+  DATA.days.forEach(d => {
+    days[d.id] = {
+      items: d.items.map(it => ({ id: it.id, g: it.g })),
+      oil: { on: !!d.oil, g: d.oilG },
+      done: d.iso < iso,
+      reaction: { like: '', stool: '', memo: '' }
+    };
+  });
+  const day = pickToday();
+  return { v: 1, days: days, ui: { week: weekIndexOf(day), day: day } };
+}
+
+let state = defaultState();
+
+function normalizeState(s) {
+  if (!s || typeof s !== 'object' || !s.days) return null;
+  const base = defaultState();
+  DAY_IDS.forEach(id => {
+    const src = s.days[id];
+    if (!src) { s.days[id] = base.days[id]; return; }
+    if (!Array.isArray(src.items)) src.items = base.days[id].items;
+    src.items = src.items
+      .filter(it => it && FOOD.has(it.id))
+      .map(it => ({ id: it.id, g: clamp(num(it.g), 0, 500) }));
+    if (!src.oil) src.oil = { on: false, g: 0.05 };
+    src.oil.g = clamp(num(src.oil.g), 0, 20);
+    src.oil.on = !!src.oil.on;
+    if (typeof src.done !== 'boolean') src.done = false;
+    if (!src.reaction) src.reaction = { like: '', stool: '', memo: '' };
+    src.reaction.like = src.reaction.like || '';
+    src.reaction.stool = src.reaction.stool || '';
+    src.reaction.memo = typeof src.reaction.memo === 'string' ? src.reaction.memo : '';
+  });
+  Object.keys(s.days).forEach(k => { if (!DAY.has(k)) delete s.days[k]; });
+  if (!s.ui) s.ui = base.ui;
+  if (!DAY.has(s.ui.day)) s.ui.day = base.ui.day;
+  if (typeof s.ui.week !== 'number' || s.ui.week < 0 || s.ui.week > 3) s.ui.week = weekIndexOf(s.ui.day);
+  s.v = 1;
+  return s;
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return;
+    const parsed = normalizeState(JSON.parse(raw));
+    if (parsed) state = parsed;
+  } catch (e) { /* 저장소를 못 쓰면 기본값으로 진행 */ }
+}
+
+let saveTimer = null;
+function saveState() {
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) {}
+  }, 150);
+}
+function saveNow() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); return true; } catch (e) { return false; }
+}
+
+let toastTimer = null;
+function toast(msg) {
+  const el = $('#toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
+}
+
+/* ---------- 화면: 주차 탭 ---------- */
+function renderTabs() {
+  $('#tabs').innerHTML = DATA.weeks.map(w => `
+    <button class="tab" role="tab" type="button" aria-selected="${w.i === state.ui.week}" data-act="week" data-week="${w.i}">
+      <span>${w.label}</span><small>${w.range}</small>
+    </button>`).join('');
+}
+
+/* ---------- 화면: 날짜 스트립 ---------- */
+function renderStrip(scroll) {
+  const days = DATA.days.filter(d => d.week === state.ui.week);
+  const iso = todayISO();
+  const strip = $('#strip');
+  strip.innerHTML = days.map(d => {
+    const c = computeDay(d.id);
+    const st = state.days[d.id];
+    const marks = `<i class="${st.done ? 'on' : ''}"></i><i class="${(st.reaction.memo || st.reaction.like) ? 'memo' : ''}"></i>`;
+    return `<button class="daychip${d.iso === iso ? ' today' : ''}" role="tab" type="button"
+        aria-current="${d.id === state.ui.day}" data-act="day" data-day="${d.id}">
+      <span class="dn">${d.short}</span>
+      <span class="dd">${d.dateLabel}</span>
+      <span class="dk">${r1(c.t.kcal)}<span style="font-size:9px;font-weight:600;color:#8A7860"> kcal</span></span>
+      <span class="marks">${marks}</span>
+    </button>`;
+  }).join('');
+  if (scroll) {
+    const cur = strip.querySelector('[aria-current="true"]');
+    if (cur && cur.scrollIntoView) {
+      try { cur.scrollIntoView({ block: 'nearest', inline: 'center' }); } catch (e) {}
+    }
+  }
+}
+
+/* ---------- 화면: 하루 상세 ---------- */
+const ADD_GROUPS = [
+  { g: '채소', ids: ['zucchini','cabbage','cauliflower','carrot','broccoli','onion','radish','spinach','parsnip'] },
+  { g: '탄수화물', ids: ['rice_jinjuk','rice_misu','rice_bap','potato','sweetpotato','kabocha','oats'] },
+  { g: '단백질', ids: ['beef','chicken','tofu','peas','pea_cube','eggyolk'] },
+  { g: '지방·기타', ids: ['avocado','oliveoil','water'] }
+];
+const VARIANT_GROUPS = [
+  { label: '쌀 농도', ids: ['rice_misu','rice_jinjuk','rice_bap'], names: { rice_misu: '미음 10배', rice_jinjuk: '진죽 5배', rice_bap: '쌀밥' } },
+  { label: '완두콩 기준', ids: ['peas','pea_cube'], names: { peas: '원물 퓨레', pea_cube: '베리네이처 큐브' } }
+];
+const LIKES = [['good','잘 먹음'],['soso','보통'],['no','거부']];
+const STOOLS = [['normal','보통'],['soft','묽음'],['hard','딱딱'],['loose','설사']];
+
+function ingRow(it, idx) {
+  const f = FOOD.get(it.id);
+  if (!f) return '';
+  const n = zero();
+  addNut(n, f, num(it.g));
+  return `<li class="ing" data-idx="${idx}">
+    <div class="ing-top">
+      <span class="ing-name">${esc(f.name)}<span class="st">${esc(f.state)}</span>
+        <span class="kcal" data-role="rowkcal">${r1(n.kcal)} kcal · 단 ${r2(n.prot)}g</span></span>
+      <button class="del" type="button" data-act="del" data-idx="${idx}" aria-label="${esc(f.name)} 삭제">✕</button>
+    </div>
+    <div class="stepper">
+      <button type="button" data-act="step" data-idx="${idx}" data-d="-5" aria-label="5g 줄이기">−5</button>
+      <button type="button" data-act="step" data-idx="${idx}" data-d="-1" aria-label="1g 줄이기">−1</button>
+      <label class="gbox"><input type="number" inputmode="decimal" step="0.5" min="0" max="300"
+        value="${num(it.g)}" data-act="gram" data-idx="${idx}" aria-label="${esc(f.name)} 그램"><span class="unit">g</span></label>
+      <button type="button" data-act="step" data-idx="${idx}" data-d="1" aria-label="1g 늘리기">+1</button>
+      <button type="button" data-act="step" data-idx="${idx}" data-d="5" aria-label="5g 늘리기">+5</button>
+    </div>
+  </li>`;
+}
+
+function variantRow(id) {
+  const group = VARIANT_GROUPS.find(v => v.ids.indexOf(id) >= 0);
+  if (!group) return '';
+  const st = state.days[state.ui.day];
+  const present = st.items.find(it => group.ids.indexOf(it.id) >= 0);
+  if (!present) return '';
+  return `<div class="variants"><span class="lbl">${group.label}</span><span class="seg">
+    ${group.ids.map(pid => `<button type="button" data-act="variant" data-group="${esc(group.label)}" data-id="${pid}"
+      aria-pressed="${present.id === pid}">${group.names[pid]}</button>`).join('')}
+  </span></div>`;
+}
+
+function renderDayCard() {
+  const id = state.ui.day;
+  const d = DAY.get(id);
+  const st = state.days[id];
+  const c = computeDay(id);
+  const oilOn = st.oil && st.oil.on;
+  const reactChips = (list, field) => list.map(([v, label]) =>
+    `<button class="pill" type="button" data-act="react" data-field="${field}" data-v="${v}"
+      aria-pressed="${st.reaction[field] === v}">${label}</button>`).join('');
+
+  const riceId = (st.items.find(it => VARIANT_GROUPS[0].ids.indexOf(it.id) >= 0) || {}).id;
+  const peaId = (st.items.find(it => VARIANT_GROUPS[1].ids.indexOf(it.id) >= 0) || {}).id;
+
+  $('#dayCard').innerHTML = `
+    <div class="daytop">
+      <div>
+        <div class="menu">${esc(d.menu)}</div>
+        <div class="dmeta">${d.short} · ${d.dateLabel} (${d.dow}) ${d.mod ? '<span class="chip" style="margin-left:6px">수정</span>' : ''}</div>
+      </div>
+      <button class="donebtn" type="button" data-act="done" aria-pressed="${!!st.done}">${st.done ? '✓ 먹임 완료' : '먹임 완료로 표시'}</button>
+    </div>
+
+    <div class="sec-t">재료 · 익혀서 갈아 둔 무게</div>
+    <ul>${st.items.map(ingRow).join('') || '<li class="hint">재료가 없습니다. 아래에서 추가해 주세요.</li>'}</ul>
+    ${variantRow(riceId)}${variantRow(peaId)}
+
+    <div class="oilrow">
+      <div class="t"><b>올리브오일</b><div>${oilOn ? '오늘 ' + r2(num(st.oil.g)) + 'g 포함 (기본 0.05g)' : '오늘은 제외 (아보카도 들어가는 날)'}</div></div>
+      <div class="oilbox${oilOn ? ' show' : ''}">
+        <input type="number" inputmode="decimal" step="0.01" min="0" max="5" value="${num(st.oil.g)}"
+          data-act="oilgram" aria-label="올리브오일 그램"><span class="hint" style="margin:0">g</span>
+      </div>
+      <button class="switch" type="button" role="switch" aria-checked="${oilOn}" aria-label="올리브오일 포함" data-act="oiltoggle"></button>
+    </div>
+
+    <div class="addrow">
+      <select id="addSel" aria-label="재료 추가">
+        ${ADD_GROUPS.map(g => `<optgroup label="${g.g}">${g.ids.map(fid => {
+          const f = FOOD.get(fid);
+          return `<option value="${f.id}">${esc(f.name)}${f.id === 'rice_jinjuk' ? ' (기본)' : ''}</option>`;
+        }).join('')}</optgroup>`).join('')}
+      </select>
+      <button type="button" data-act="add">추가</button>
+    </div>
+    <div class="hint" id="riceHint">${riceId ? riceHintText(riceId) : ''}</div>
+
+    <div class="sec-t">반응 기록</div>
+    <div class="reactions">
+      <div class="rrow"><span class="lbl">선호도</span>${reactChips(LIKES, 'like')}</div>
+      <div class="rrow"><span class="lbl">변 상태</span>${reactChips(STOOLS, 'stool')}</div>
+      <textarea placeholder="메모 (예: 애호박 완식, 오후에 발진 없음)" data-act="memo" aria-label="반응 메모">${esc(st.reaction.memo)}</textarea>
+    </div>
+    <div class="hint" style="display:flex;gap:6px;justify-content:space-between">
+      <span>${d.note ? '식단표 메모: ' + esc(d.note) : ''}</span>
+      <button class="hbtn" type="button" data-act="reset" style="padding:5px 10px;font-size:11.5px">기본값 복원</button>
+    </div>
+  `;
+}
+
+function riceHintText(id) {
+  const t = {
+    rice_misu: '10배죽(미음) 기준 — 100g당 백미 9.1g 환산값. 물 100g당 쌀 10g 비율.',
+    rice_jinjuk: '5배죽(진죽) 기준 — 100g당 백미 16.7g 환산값. 초기 이유식 기본 농도.',
+    rice_bap: '익힌 쌀밥 기준 — USDA 조리된 흰쌀밥 100g 값.'
+  };
+  return t[id] || '';
+}
+
+/* ---------- 화면: 영양 카드 ---------- */
+function renderNutrition() {
+  const c = computeDay(state.ui.day);
+  const t = c.t;
+  const kcal = t.kcal;
+  const eC = t.carb * 4, eP = t.prot * 4, eF = t.fat * 9;
+  const eSum = eC + eP + eF || 1;
+  const fatTotal = t.fat || 0.0001;
+  const byIng = c.rows.slice().sort((a, b) => b.n.kcal - a.n.kcal);
+
+  $('#nutCard').innerHTML = `
+    <div class="card-h"><h2>영양 계산 · 실시간</h2><span class="tag">1회분 기준</span></div>
+    <div class="kcalbig">
+      <span class="n">${r1(kcal)}</span><span class="u">kcal</span>
+      <span class="w">고형분 ${r1(c.solid)}g + 물 ${r1(c.water)}g<br><b style="color:var(--ink-2)">총 ${r1(c.weight)}g</b></span>
+    </div>
+
+    <div class="bar" aria-hidden="true">
+      <i style="width:${pct(eC, eSum)}%;background:var(--carb)"></i>
+      <i style="width:${pct(eP, eSum)}%;background:var(--prot)"></i>
+      <i style="width:${pct(eF, eSum)}%;background:var(--fat)"></i>
+    </div>
+    <div class="legend">
+      <span><span class="sw" style="background:var(--carb)"></span>탄 ${Math.round(pct(eC, eSum))}%</span>
+      <span><span class="sw" style="background:var(--prot)"></span>단 ${Math.round(pct(eP, eSum))}%</span>
+      <span><span class="sw" style="background:var(--fat)"></span>지 ${Math.round(pct(eF, eSum))}%</span>
+      <span style="margin-left:auto">탄:단:지 = ${Math.round(pct(eC, eSum))}:${Math.round(pct(eP, eSum))}:${Math.round(pct(eF, eSum))}</span>
+    </div>
+
+    <div class="nutgrid">
+      <div class="nut"><div class="k">탄수화물</div><div class="v">${r1(t.carb)}<span> g</span></div></div>
+      <div class="nut"><div class="k">단백질</div><div class="v">${r1(t.prot)}<span> g</span></div></div>
+      <div class="nut"><div class="k">총 지방</div><div class="v">${r2(t.fat)}<span> g</span></div></div>
+      <div class="nut"><div class="k">열량</div><div class="v">${r1(kcal)}<span> kcal</span></div></div>
+    </div>
+
+    <div class="sec-t">지방 구성</div>
+    <div class="bar" aria-hidden="true">
+      <i style="width:${pct(t.sat, fatTotal)}%;background:var(--sat)"></i>
+      <i style="width:${pct(c.unsat, fatTotal)}%;background:var(--unsat)"></i>
+    </div>
+    <div class="legend" style="justify-content:space-between">
+      <span><span class="sw" style="background:var(--sat)"></span>포화 <b>${r2(t.sat)}g</b> (${Math.round(pct(t.sat, fatTotal))}%)</span>
+      <span><span class="sw" style="background:var(--unsat)"></span>불포화 <b>${r2(c.unsat)}g</b> (${Math.round(pct(c.unsat, fatTotal))}%)</span>
+    </div>
+    <div class="macrorow"><span class="nm">단일</span><span class="gg">${r2(t.mono)}g</span>
+      <span class="tr"><i style="width:${pct(t.mono, fatTotal)}%;background:#A9BE8E"></i></span><span class="pc">${Math.round(pct(t.mono, fatTotal))}%</span></div>
+    <div class="macrorow"><span class="nm">다가</span><span class="gg">${r2(t.poly)}g</span>
+      <span class="tr"><i style="width:${pct(t.poly, fatTotal)}%;background:#7C966C"></i></span><span class="pc">${Math.round(pct(t.poly, fatTotal))}%</span></div>
+    ${(() => { const rest = t.fat - c.unsat - t.sat; return rest > 0.02 ? `<div class="hint" style="margin-top:4px">나머지 ${r2(rest)}g은 그 밖의 지질(글리세롤 골격 등)이라 포화·불포화 어느 쪽에도 넣지 않았습니다.</div>` : ''; })()}
+
+    <div class="sec-t">재료별 기여도</div>
+    <table class="tbl">
+      <thead><tr><th>재료</th><th>g</th><th>kcal</th><th>탄</th><th>단</th><th>지</th></tr></thead>
+      <tbody>
+        ${byIng.map(r => `<tr>
+          <td><span class="nm">${esc(r.food.name)}</span>${r.food.split ? ' <span class="est">†</span>' : ''}<br>
+            <span class="g">${esc(r.food.state)}</span></td>
+          <td>${r1(r.g)}</td><td>${r1(r.n.kcal)}</td><td>${r1(r.n.carb)}</td><td>${r2(r.n.prot)}</td><td>${r2(r.n.fat)}</td>
+        </tr>`).join('') || '<tr><td colspan="6" class="g">재료가 없습니다.</td></tr>'}
+        <tr><td><b>합계</b></td><td>${r1(c.solid + c.water)}</td><td><b>${r1(kcal)}</b></td><td>${r1(t.carb)}</td><td>${r1(t.prot)}</td><td>${r2(t.fat)}</td></tr>
+      </tbody>
+    </table>
+    <div class="hint">† 표시 재료는 포화·불포화 외 세부 지방산 구분이 원 DB에 없어 불포화를 단일/다가로 나눠 표기한 항목입니다.<br>
+      채소류는 식이섬유 때문에 4·4·9 환산보다 USDA가 보고한 열량이 낮습니다(예: 애호박 18.6 → 15 kcal). 표시 열량은 DB가 보고한 값을 그대로 씁니다.</div>
+    <div class="checkline">
+      <span>· 탄·단·지 열량 환산 ${r1(c.energyMacro)} kcal (4·4·9 기준) / 표시 열량 ${r1(kcal)} kcal — 차이 ${r1(Math.abs(c.energyMacro - kcal))} kcal</span>
+    </div>
+  `;
+}
+
+/* ---------- 화면: 주간 차트 ---------- */
+function renderChart() {
+  const days = DATA.days.filter(d => d.week === state.ui.week);
+  const vals = days.map(d => computeDay(d.id));
+  const W = 340, H = 196, pl = 6, pr = 6, pt = 22, pb = 34;
+  const innerW = W - pl - pr, innerH = H - pt - pb;
+  const max = Math.max.apply(null, vals.map(v => v.t.kcal).concat([40])) * 1.12;
+  const slot = innerW / vals.length;
+  const bw = Math.min(28, slot * 0.62);
+
+  let bars = '';
+  const avgK = vals.reduce((s, v) => s + v.t.kcal, 0) / vals.length;
+  vals.forEach((v, i) => {
+    const cx = pl + slot * i + slot / 2;
+    const kC = v.kcalCarb, kP = v.kcalProt, kF = v.kcalFat;
+    const totalE = kC + kP + kF || 1;
+    const hFull = (v.t.kcal / max) * innerH;
+    const hC = hFull * (kC / totalE), hP = hFull * (kP / totalE), hF = hFull * (kF / totalE);
+    const x = cx - bw / 2;
+    let y = pt + innerH;
+    bars += `<rect x="${x.toFixed(1)}" y="${(y - hC).toFixed(1)}" width="${bw.toFixed(1)}" height="${hC.toFixed(1)}" fill="#E0A96D" rx="2"/>`;
+    y -= hC;
+    bars += `<rect x="${x.toFixed(1)}" y="${(y - hP).toFixed(1)}" width="${bw.toFixed(1)}" height="${hP.toFixed(1)}" fill="#C0703F"/>`;
+    y -= hP;
+    bars += `<rect x="${x.toFixed(1)}" y="${(y - hF).toFixed(1)}" width="${bw.toFixed(1)}" height="${hF.toFixed(1)}" fill="#8A7351" rx="2"/>`;
+    bars += `<text x="${cx.toFixed(1)}" y="${(pt + innerH - hFull - 5).toFixed(1)}" text-anchor="middle" font-size="9.5" fill="#4A3C2E" font-weight="700">${r1(v.t.kcal)}</text>`;
+    bars += `<text x="${cx.toFixed(1)}" y="${(H - 18)}" text-anchor="middle" font-size="9" fill="#8A7860" font-weight="600">${v.day.short}</text>`;
+    bars += `<text x="${cx.toFixed(1)}" y="${(H - 7)}" text-anchor="middle" font-size="8" fill="#B3A28C">${v.day.dateLabel}</text>`;
+  });
+  const avgY = pt + innerH - (avgK / max) * innerH;
+  const avg = k => vals.reduce((s, v) => s + v.t[k], 0) / vals.length;
+
+  $('#chartCard').innerHTML = `
+    <div class="card-h"><h2>${DATA.weeks[state.ui.week].label} 추이</h2><span class="tag">7일 · 평균 <b style="color:var(--terra-d)">${r1(avgK)} kcal</b></span></div>
+    <div class="chartbox">
+      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${DATA.weeks[state.ui.week].label} 칼로리와 탄단지 구성">
+        <line x1="${pl}" y1="${pt + innerH}" x2="${W - pr}" y2="${pt + innerH}" stroke="#E7DAC8" stroke-width="1"/>
+        <line x1="${pl}" y1="${avgY.toFixed(1)}" x2="${W - pr}" y2="${avgY.toFixed(1)}" stroke="#C0703F" stroke-width="1" stroke-dasharray="3 3" opacity=".55"/>
+        ${bars}
+      </svg>
+    </div>
+    <div class="legend" style="margin-top:2px">
+      <span><span class="sw" style="background:#E0A96D"></span>탄수화물 열량</span>
+      <span><span class="sw" style="background:#C0703F"></span>단백질 열량</span>
+      <span><span class="sw" style="background:#8A7351"></span>지방 열량</span>
+    </div>
+    <div class="avg">
+      <div><div class="k">평균 열량</div><div class="v">${r1(avgK)}<small> kcal</small></div></div>
+      <div><div class="k">평균 탄/단</div><div class="v">${r1(avg('carb'))}<small> / ${r1(avg('prot'))}g</small></div></div>
+      <div><div class="k">평균 지방</div><div class="v">${r2(avg('fat'))}<small> g</small></div></div>
+      <div><div class="k">포화</div><div class="v">${r2(avg('sat'))}<small> g</small></div></div>
+      <div><div class="k">불포화</div><div class="v">${r2(avg('mono') + avg('poly'))}<small> g</small></div></div>
+      <div><div class="k">총 중량</div><div class="v">${r1(vals.reduce((s, v) => s + v.weight, 0) / vals.length)}<small> g</small></div></div>
+    </div>
+  `;
+}
+
+/* ---------- 화면: DB · 메모 ---------- */
+function renderDB() {
+  const rows = DATA.foods.map(f => `
+    <div class="dbfood">
+      <div class="dbf-head"><b>${esc(f.name)}${f.split ? '<span class="est"> †</span>' : ''}</b>
+        <span class="st">${esc(f.state)}</span><span class="kc">${r1(f.kcal)} kcal</span></div>
+      <div class="dbf-nums">탄 ${r2(f.carb)} · 단 ${r2(f.prot)} · 지 ${r2(f.fat)} · <i>포화</i> ${r2(f.sat)} · <i>불포화</i> ${r2(f.mono + f.poly)}</div>
+      <div class="dbf-src">${esc(f.source)}</div>
+    </div>`).join('');
+  $('#dbBody').innerHTML = `
+    <div class="dbgrid">${rows}</div>
+    <div class="hint">
+      100g당 값. 모든 수치는 “익혀서 갈아 둔 무게” 기준이며, 아보카도는 생과육·올리브오일은 생오일 기준입니다.<br>
+      † 단호박·베리네이처 완두콩 큐브는 원 DB에 포화지방만(또는 총지방만) 있어 불포화를 단일/다가로 나눠 표기했습니다 — 세부 지방산 오차는 1회분(20g)에서 0.1g 미만입니다.<br>
+      쌀(미음·진죽)은 백미 1 : 물 5(또는 10) 무게비로 전량 섭취한다고 보고 100g당 백미 함량(16.7g / 9.1g)으로 환산한 계산값입니다.
+    </div>
+  `;
+  $('#memoList').innerHTML = DATA.memos.map(m => `<li>${m}</li>`).join('');
+}
+
+/* ---------- 화면 전체 ---------- */
+function renderAll() {
+  renderTabs();
+  renderStrip(true);
+  renderDayCard();
+  renderNutrition();
+  renderChart();
+}
+function renderLive() {
+  renderStrip();
+  renderNutrition();
+  renderChart();
+}
+
+/* ---------- 동작 ---------- */
+function setDay(id) {
+  if (!DAY.has(id)) return;
+  state.ui.day = id;
+  state.ui.week = DAY.get(id).week;
+  saveState();
+  renderAll();
+}
+function stepGram(idx, delta) {
+  const st = state.days[state.ui.day];
+  const it = st.items[idx];
+  if (!it) return;
+  it.g = clamp(r1(num(it.g) + delta), 0, 300);
+  const li = $('#dayCard .ing[data-idx="' + idx + '"]');
+  if (li) {
+    const input = li.querySelector('input[data-act="gram"]');
+    if (input) input.value = it.g;
+    const n = zero();
+    addNut(n, FOOD.get(it.id), it.g);
+    const rk = li.querySelector('[data-role="rowkcal"]');
+    if (rk) rk.textContent = r1(n.kcal) + ' kcal · 단 ' + r2(n.prot) + 'g';
+  }
+  saveState();
+  renderLive();
+}
+function onGramInput(idx, value) {
+  const st = state.days[state.ui.day];
+  const it = st.items[idx];
+  if (!it) return;
+  it.g = clamp(num(value), 0, 300);
+  const li = $('#dayCard .ing[data-idx="' + idx + '"]');
+  if (li) {
+    const n = zero();
+    addNut(n, FOOD.get(it.id), it.g);
+    const rk = li.querySelector('[data-role="rowkcal"]');
+    if (rk) rk.textContent = r1(n.kcal) + ' kcal · 단 ' + r2(n.prot) + 'g';
+  }
+  saveState();
+  renderLive();
+}
+function addItem(id) {
+  const st = state.days[state.ui.day];
+  const f = FOOD.get(id);
+  if (!f) return;
+  if (f.id === 'oliveoil') { st.oil.on = true; st.oil.g = st.oil.g || 0.05; saveState(); renderAll(); return; }
+  const exists = st.items.find(it => it.id === id);
+  if (exists) { toast('이미 들어 있는 재료예요'); return; }
+  st.items.push({ id: id, g: f.defaultG || 10 });
+  saveState();
+  renderAll();
+  toast(f.name + ' 추가');
+}
+function delItem(idx) {
+  const st = state.days[state.ui.day];
+  const it = st.items[idx];
+  if (!it) return;
+  st.items.splice(idx, 1);
+  saveState();
+  renderAll();
+}
+function toggleDone() {
+  const st = state.days[state.ui.day];
+  st.done = !st.done;
+  saveState();
+  renderDayCard();
+  renderStrip();
+  toast(st.done ? '먹임 완료로 표시했어요' : '표시를 해제했어요');
+}
+function resetDay() {
+  const id = state.ui.day;
+  const base = DATA.days.find(d => d.id === id);
+  state.days[id] = {
+    items: base.items.map(it => ({ id: it.id, g: it.g })),
+    oil: { on: !!base.oil, g: base.oilG },
+    done: state.days[id].done,
+    reaction: state.days[id].reaction
+  };
+  saveState();
+  renderAll();
+  toast('이 날 식단을 기본값으로 되돌렸어요');
+}
+function switchVariant(groupLabel, id) {
+  const group = VARIANT_GROUPS.find(g => g.label === groupLabel);
+  if (!group) return;
+  const st = state.days[state.ui.day];
+  const it = st.items.find(x => group.ids.indexOf(x.id) >= 0);
+  if (!it) return;
+  it.id = id;
+  saveState();
+  renderAll();
+}
+function exportJSON() {
+  saveNow();
+  const payload = {
+    app: '리아 이유식 식단표',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    range: 'D+160~D+187',
+    days: state.days
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const iso = todayISO();
+  a.href = url;
+  a.download = '리아_이유식_기록_' + iso + '.json';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 400);
+  toast('기록을 JSON으로 저장했어요');
+}
+function importJSON(file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(reader.result);
+      const next = normalizeState({ days: parsed.days || parsed, ui: state.ui });
+      if (!next) throw new Error('bad');
+      state = next;
+      saveNow();
+      renderAll();
+      toast('기록을 복원했어요');
+    } catch (e) {
+      toast('복원 실패 — 백업 파일을 확인해 주세요');
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* ---------- 이벤트 ---------- */
+function bindEvents() {
+  document.addEventListener('click', ev => {
+    const t = ev.target.closest('[data-act]');
+    if (!t) return;
+    const act = t.getAttribute('data-act');
+    const st = state.days[state.ui.day];
+    if (act === 'week') {
+      state.ui.week = parseInt(t.getAttribute('data-week'), 10) || 0;
+      const first = DATA.days.find(d => d.week === state.ui.week);
+      if (first) state.ui.day = first.id;
+      saveState();
+      renderAll();
+    } else if (act === 'day') {
+      setDay(t.getAttribute('data-day'));
+    } else if (act === 'step') {
+      stepGram(parseInt(t.getAttribute('data-idx'), 10), num(t.getAttribute('data-d')));
+    } else if (act === 'del') {
+      delItem(parseInt(t.getAttribute('data-idx'), 10));
+    } else if (act === 'add') {
+      const sel = $('#addSel');
+      if (sel) addItem(sel.value);
+    } else if (act === 'done') {
+      toggleDone();
+    } else if (act === 'reset') {
+      resetDay();
+    } else if (act === 'variant') {
+      switchVariant(t.getAttribute('data-group'), t.getAttribute('data-id'));
+    } else if (act === 'oiltoggle') {
+      st.oil.on = !st.oil.on;
+      if (st.oil.on && !(num(st.oil.g) > 0)) st.oil.g = 0.05;
+      saveState();
+      renderDayCard();
+      renderLive();
+    } else if (act === 'react') {
+      const field = t.getAttribute('data-field');
+      const v = t.getAttribute('data-v');
+      st.reaction[field] = st.reaction[field] === v ? '' : v;
+      saveState();
+      renderDayCard();
+      renderStrip();
+    }
+  });
+
+  document.addEventListener('input', ev => {
+    const t = ev.target;
+    const act = t.getAttribute && t.getAttribute('data-act');
+    if (act === 'gram') {
+      onGramInput(parseInt(t.getAttribute('data-idx'), 10), t.value);
+    } else if (act === 'oilgram') {
+      const st = state.days[state.ui.day];
+      st.oil.g = clamp(num(t.value), 0, 20);
+      if (st.oil.g > 0) st.oil.on = true;
+      saveState();
+      renderLive();
+    }
+  });
+
+  document.addEventListener('change', ev => {
+    const t = ev.target;
+    if (t.id === 'fileImport' && t.files && t.files[0]) {
+      importJSON(t.files[0]);
+      t.value = '';
+    }
+  });
+
+  document.addEventListener('input', ev => {
+    if (ev.target.getAttribute && ev.target.getAttribute('data-act') === 'memo') {
+      const st = state.days[state.ui.day];
+      st.reaction.memo = ev.target.value;
+      saveState();
+      renderStrip();
+    }
+  });
+
+  $('#btnToday').addEventListener('click', () => {
+    const id = pickToday();
+    setDay(id);
+    toast('오늘(' + DAY.get(id).dateLabel + ')로 이동');
+  });
+  $('#btnExport').addEventListener('click', exportJSON);
+  $('#btnImport').addEventListener('click', () => $('#fileImport').click());
+}
+
+/* ---------- 시작 ---------- */
+function storageAvailable() {
+  try {
+    const k = '__lia_test__';
+    localStorage.setItem(k, '1');
+    localStorage.removeItem(k);
+    return true;
+  } catch (e) { return false; }
+}
+
+function boot() {
+  loadState();
+  renderDB();
+  bindEvents();
+  renderAll();
+  if (!storageAvailable()) {
+    const n = $('#saveNote');
+    if (n) n.classList.add('show');
+  }
+}
+
+if (typeof window !== 'undefined' && window.__TEST__) {
+  window.__APP__ = {
+    DATA: DATA, FOOD: FOOD, DAY: DAY,
+    getState: () => state,
+    setState: s => { state = normalizeState(s) || defaultState(); },
+    computeDay, zero, addNut, defaultState, normalizeState, pickToday,
+    renderAll, renderLive, renderDayCard, setDay, stepGram, addItem, delItem, resetDay, switchVariant, boot, saveNow
+  };
+} else if (typeof document !== 'undefined' && document.getElementById('dayCard')) {
+  boot();
+}
+</script>
+</body>
+</html>
