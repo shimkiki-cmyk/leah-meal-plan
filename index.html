@@ -275,6 +275,44 @@ details.card[open] > summary .arw{transform:rotate(180deg)}
 .memo li::before{content:"·";position:absolute;left:4px;color:var(--terra);font-weight:900}
 .memo li b{color:var(--ink)}
 
+/* ---------- 새 재료 달력 ---------- */
+.calnav{display:flex;align-items:center;gap:6px;margin-left:auto}
+.calnav b{font-size:13px;min-width:76px;text-align:center}
+.calnav button{width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:#FFF8F0;color:var(--terra-d);font-weight:800}
+.calnav button:disabled{opacity:.35}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.cal .wd{font-size:10px;font-weight:700;color:var(--muted);text-align:center;padding:2px 0 4px}
+.cal .wd.sun{color:#B4573C}
+.cal .wd.sat{color:#5A7FA0}
+.cc{
+  position:relative;min-height:46px;border-radius:10px;border:1px solid transparent;background:transparent;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:4px 1px 3px;gap:1px;min-width:0
+}
+.cc .dnum{font-size:12px;font-weight:650;color:#C3B5A2;line-height:1.2}
+.cc.inplan{background:#FFFBF5;border-color:var(--line-2)}
+.cc.inplan .dnum{color:var(--ink-2)}
+.cc.obs{background:#FBEEE2;border-color:#F0D9C2}
+.cc.start{background:var(--terra);border-color:var(--terra)}
+.cc.start .dnum{color:#fff;font-weight:800}
+.cc .nf{font-size:9px;font-weight:700;line-height:1.15;color:#fff;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px}
+.cc.multi{box-shadow:inset 0 0 0 2px #F3C76B}
+.cc .ob{font-size:8.5px;color:var(--terra-d);font-weight:650;line-height:1.15}
+.cc .dot{width:5px;height:5px;border-radius:50%;background:var(--ok);margin-top:auto}
+.cc.start .dot{background:#fff}
+.cc[aria-current="true"]{outline:2px solid var(--ink);outline-offset:1px}
+.cc.today::after{content:"";position:absolute;top:3px;right:3px;width:5px;height:5px;border-radius:50%;background:var(--ink)}
+.cc.start.today::after{background:#fff}
+.callegend{display:flex;gap:10px;flex-wrap:wrap;margin-top:9px;font-size:10.5px;color:var(--muted);align-items:center}
+.callegend .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px;border:1px solid var(--line)}
+.newlist{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.newitem{display:flex;align-items:center;gap:8px;border:1px solid var(--line-2);background:#FFFBF5;border-radius:11px;padding:7px 9px;text-align:left;width:100%;min-height:40px}
+.newitem:active{background:var(--cream2)}
+.newitem .dt{font-size:11.5px;font-weight:750;color:var(--terra-d);min-width:74px}
+.newitem .nm{font-size:13px;font-weight:700;flex:1;min-width:0}
+.newitem .dd{font-size:10.5px;color:var(--muted);white-space:nowrap}
+.newitem.warn{border-color:#F3C76B;background:#FFF8E6}
+.newitem[aria-current="true"]{border-color:var(--terra)}
+
 /* ---------- toast ---------- */
 .toast{
   position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:rgba(51,41,31,.94);color:#fff;
@@ -324,6 +362,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
       <section class="card" id="dayCard" aria-live="polite"></section>
     </div>
     <div class="col">
+      <section class="card" id="calCard"></section>
       <section class="card" id="nutCard"></section>
       <section class="card" id="chartCard"></section>
     </div>
@@ -347,6 +386,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
       <li><b>메뉴 이름 바꾸기</b> — 카드 위 메뉴명 옆 <b>✏️ 수정</b>을 누르면 그 자리에서 이름을 고칠 수 있어요(Enter 저장 · Esc 취소). 바꾼 이름은 이 기기에만 저장되고, “기본값 복원”을 누르면 원래 이름으로 돌아갑니다.</li>
       <li><b>재료 바꿔 보기</b> — g수는 −5/−1/+1/+5 또는 직접 입력, 재료는 아래 드롭다운으로 추가·삭제. “기본값 복원”을 누르면 그 날은 원래 식단과 메뉴 이름으로 돌아갑니다.</li>
       <li><b>쌀 농도 · 완두콩 기준</b> — 쌀이 든 날은 미음(10배)/진죽(5배)/쌀밥, 완두콩이 든 날은 원물 퓨레/베리네이처 큐브로 바꿔 열량을 비교할 수 있습니다.</li>
+      <li><b>새 재료 달력</b> — 각 재료가 식단에 처음 들어가는 날을 진한 색으로, 그 뒤 관찰 기간(3일)을 옅은 색으로 보여 줘요. 날짜를 누르면 그 날로 이동하고, 재료를 추가·삭제하면 시작일도 바로 바뀝니다. ‹ › 로 달을 넘겨 보세요.</li>
       <li><b>백업</b> — 기기를 바꾸거나 브라우저 기록을 지우기 전에 “기록 백업”으로 JSON을 받아 두세요.</li>
     </ul></div>
   </details>
@@ -901,6 +941,135 @@ function renderChart() {
   `;
 }
 
+/* ---------- 화면: 새 재료 달력 ---------- */
+// 같은 재료의 다른 형태(쌀 농도, 완두콩 원물/큐브)는 하나의 재료로 본다.
+const ING_GROUP = { rice_misu: 'rice', rice_jinjuk: 'rice', rice_bap: 'rice', peas: 'peas', pea_cube: 'peas' };
+const ING_GROUP_NAME = { rice: '쌀', peas: '완두콩' };
+const NOT_NEW = new Set(['water', 'oliveoil']);
+const OBS_DAYS = 3;             // 새 재료 시작일 포함 관찰 기간
+let calMonth = null;            // 'YYYY-MM' — 달력에 보이는 달 (없으면 선택한 날의 달)
+
+function ingKey(id) { return ING_GROUP[id] || id; }
+function ingName(key) { return ING_GROUP_NAME[key] || (FOOD.get(key) ? FOOD.get(key).name : key); }
+
+/* 현재 식단(이 기기에서 바꾼 재료 포함)을 날짜순으로 훑어 재료별 첫 등장일을 찾는다. */
+function newIngredientStarts() {
+  const seen = new Set();
+  const byDay = {};
+  const list = [];
+  DATA.days.forEach(d => {
+    const st = state.days[d.id];
+    if (!st) return;
+    const fresh = [];
+    st.items.forEach(it => {
+      if (NOT_NEW.has(it.id) || !(num(it.g) > 0)) return;
+      const k = ingKey(it.id);
+      if (seen.has(k)) return;
+      seen.add(k);
+      fresh.push(k);
+    });
+    if (fresh.length) {
+      byDay[d.id] = fresh;
+      fresh.forEach(k => list.push({ key: k, name: ingName(k), day: d, first: d.n === 0 }));
+    }
+  });
+  // 관찰 기간: 시작일 다음 날부터 (OBS_DAYS-1)일, 다른 새 재료 시작일 전까지
+  const obs = {};
+  DATA.days.forEach((d, i) => {
+    if (!byDay[d.id] || d.n === 0) return;
+    for (let j = 1; j < OBS_DAYS && i + j < DATA.days.length; j++) {
+      const nd = DATA.days[i + j];
+      if (byDay[nd.id]) break;
+      obs[nd.id] = { names: byDay[d.id].map(ingName), nth: j + 1 };
+    }
+  });
+  return { byDay: byDay, list: list, obs: obs };
+}
+
+function isoParts(iso) { const p = iso.split('-').map(Number); return { y: p[0], m: p[1], d: p[2] }; }
+function planMonths() {
+  const out = [];
+  DATA.days.forEach(d => { const m = d.iso.slice(0, 7); if (out.indexOf(m) < 0) out.push(m); });
+  return out;
+}
+
+function renderCalendar() {
+  const months = planMonths();
+  const cur = DAY.get(state.ui.day);
+  if (!calMonth || months.indexOf(calMonth) < 0) calMonth = cur.iso.slice(0, 7);
+  const mi = months.indexOf(calMonth);
+  const ym = isoParts(calMonth + '-01');
+  const first = new Date(ym.y, ym.m - 1, 1);
+  const lead = first.getDay();
+  const dim = new Date(ym.y, ym.m, 0).getDate();
+  const byIso = new Map(DATA.days.map(d => [d.iso, d]));
+  const info = newIngredientStarts();
+  const iso = todayISO();
+  const p2 = n => String(n).padStart(2, '0');
+
+  let cells = ['일','월','화','수','목','금','토'].map((w, i) =>
+    `<div class="wd${i === 0 ? ' sun' : i === 6 ? ' sat' : ''}">${w}</div>`).join('');
+  for (let i = 0; i < lead; i++) cells += '<div></div>';
+  for (let dn = 1; dn <= dim; dn++) {
+    const diso = calMonth + '-' + p2(dn);
+    const d = byIso.get(diso);
+    const todayCls = diso === iso ? ' today' : '';
+    if (!d) { cells += `<div class="cc${todayCls}"><span class="dnum">${dn}</span></div>`; continue; }
+    const st = state.days[d.id];
+    const fresh = info.byDay[d.id];
+    const ob = info.obs[d.id];
+    let cls = 'cc inplan' + todayCls;
+    let sub = '';
+    let label = d.short + ' ' + d.dateLabel;
+    if (fresh) {
+      cls += ' start' + (fresh.length > 1 && d.n > 0 ? ' multi' : '');
+      const names = fresh.map(ingName);
+      sub = `<span class="nf">${esc(names[0])}${names.length > 1 ? ' +' + (names.length - 1) : ''}</span>`;
+      label += ' · 새 재료 시작: ' + names.join(', ');
+    } else if (ob) {
+      cls += ' obs';
+      sub = `<span class="ob">${ob.nth}일째</span>`;
+      label += ' · ' + ob.names.join(', ') + ' 관찰 ' + ob.nth + '일째';
+    }
+    cells += `<button class="${cls}" type="button" data-act="day" data-day="${d.id}"
+        aria-current="${d.id === state.ui.day}" aria-label="${esc(label)}" title="${esc(label)}">
+      <span class="dnum">${dn}</span>${sub}${st && st.done ? '<span class="dot"></span>' : ''}
+    </button>`;
+  }
+
+  const items = info.list.map(x => {
+    const multi = info.byDay[x.day.id].length > 1 && !x.first;
+    return `<button class="newitem${multi ? ' warn' : ''}" type="button" data-act="day" data-day="${x.day.id}"
+        aria-current="${x.day.id === state.ui.day}">
+      <span class="dt">${x.day.dateLabel} (${x.day.dow})</span>
+      <span class="nm">${esc(x.name)}</span>
+      <span class="dd">${x.day.short}${multi ? ' · 같은 날 2개 이상' : ''}</span>
+    </button>`;
+  }).join('');
+  const warnN = Object.keys(info.byDay).filter(id => DAY.get(id).n > 0 && info.byDay[id].length > 1).length;
+
+  $('#calCard').innerHTML = `
+    <div class="card-h"><h2>새 재료 달력</h2>
+      <div class="calnav">
+        <button type="button" data-act="calprev" aria-label="이전 달" ${mi <= 0 ? 'disabled' : ''}>‹</button>
+        <b>${ym.y}년 ${ym.m}월</b>
+        <button type="button" data-act="calnext" aria-label="다음 달" ${mi >= months.length - 1 ? 'disabled' : ''}>›</button>
+      </div>
+    </div>
+    <div class="cal" role="grid" aria-label="${ym.y}년 ${ym.m}월 새 재료 시작일">${cells}</div>
+    <div class="callegend">
+      <span><span class="sw" style="background:var(--terra);border-color:var(--terra)"></span>새 재료 시작일</span>
+      <span><span class="sw" style="background:#FBEEE2;border-color:#F0D9C2"></span>관찰 ${OBS_DAYS}일</span>
+      <span><span class="sw" style="background:#FFFBF5"></span>식단 기간</span>
+      <span><span class="sw" style="background:var(--ok);border-radius:50%;border-color:var(--ok)"></span>먹임 완료</span>
+    </div>
+    ${warnN ? `<div class="notice show" style="margin:10px 0 0">새 재료가 하루에 2개 이상 시작되는 날이 ${warnN}일 있어요. 반응 원인을 구분하려면 하루에 하나씩 넣는 편이 좋아요.</div>` : ''}
+    <div class="sec-t">새 재료 시작일</div>
+    <div class="newlist">${items || '<div class="hint">아직 재료가 없습니다.</div>'}</div>
+    <div class="hint">지금 식단(이 기기에서 바꾼 재료 포함)에서 각 재료가 처음 들어가는 날을 시작일로 표시해요. 쌀 농도·완두콩 형태가 바뀌는 건 새 재료로 치지 않아요.</div>
+  `;
+}
+
 /* ---------- 화면: DB · 메모 ---------- */
 function renderDB() {
   const rows = DATA.foods.map(f => `
@@ -926,11 +1095,13 @@ function renderAll() {
   renderTabs();
   renderStrip(true);
   renderDayCard();
+  renderCalendar();
   renderNutrition();
   renderChart();
 }
 function renderLive() {
   renderStrip();
+  renderCalendar();
   renderNutrition();
   renderChart();
 }
@@ -942,6 +1113,7 @@ function setDay(id) {
   menuDraft = '';
   state.ui.day = id;
   state.ui.week = DAY.get(id).week;
+  calMonth = DAY.get(id).iso.slice(0, 7);
   saveState();
   renderAll();
 }
@@ -1003,6 +1175,7 @@ function toggleDone() {
   saveState();
   renderDayCard();
   renderStrip();
+  renderCalendar();
   toast(st.done ? '먹임 완료로 표시했어요' : '표시를 해제했어요');
 }
 function resetDay() {
@@ -1081,11 +1254,15 @@ function bindEvents() {
       menuDraft = '';
       state.ui.week = parseInt(t.getAttribute('data-week'), 10) || 0;
       const first = DATA.days.find(d => d.week === state.ui.week);
-      if (first) state.ui.day = first.id;
+      if (first) { state.ui.day = first.id; calMonth = first.iso.slice(0, 7); }
       saveState();
       renderAll();
     } else if (act === 'day') {
       setDay(t.getAttribute('data-day'));
+    } else if (act === 'calprev' || act === 'calnext') {
+      const months = planMonths();
+      const i = months.indexOf(calMonth) + (act === 'calnext' ? 1 : -1);
+      if (i >= 0 && i < months.length) { calMonth = months[i]; renderCalendar(); }
     } else if (act === 'menuedit') {
       startMenuEdit();
     } else if (act === 'menusave') {
@@ -1203,6 +1380,7 @@ if (typeof window !== 'undefined' && window.__TEST__) {
     setState: s => { state = normalizeState(s) || defaultState(); },
     computeDay, zero, addNut, defaultState, normalizeState, pickToday,
     renderAll, renderLive, renderDayCard, setDay, stepGram, addItem, delItem, resetDay, switchVariant, boot, saveNow,
+    newIngredientStarts, renderCalendar,
     menuOf, startMenuEdit, saveMenuEdit, cancelMenuEdit, setMenuName,
     isEditingMenu: () => editingMenu
   };
