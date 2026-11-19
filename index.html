@@ -1043,7 +1043,7 @@ function renderCalendar() {
         aria-current="${x.day.id === state.ui.day}">
       <span class="dt">${x.day.dateLabel} (${x.day.dow})</span>
       <span class="nm">${esc(x.name)}</span>
-      <span class="dd">${x.first ? '식단 시작일' : x.day.short}${multi ? ' · 같은 날 2개 이상' : ''}</span>
+      <span class="dd">${x.day.short}${multi ? ' · 같은 날 2개 이상' : ''}</span>
     </button>`;
   }).join('');
   const warnN = Object.keys(info.byDay).filter(id => DAY.get(id).n > 0 && info.byDay[id].length > 1).length;
@@ -1066,7 +1066,7 @@ function renderCalendar() {
     ${warnN ? `<div class="notice show" style="margin:10px 0 0">새 재료가 하루에 2개 이상 시작되는 날이 ${warnN}일 있어요. 반응 원인을 구분하려면 하루에 하나씩 넣는 편이 좋아요.</div>` : ''}
     <div class="sec-t">새 재료 시작일</div>
     <div class="newlist">${items || '<div class="hint">아직 재료가 없습니다.</div>'}</div>
-    <div class="hint">지금 식단(이 기기에서 바꾼 재료 포함)에서 각 재료가 처음 들어가는 날을 시작일로 표시해요. 쌀 농도·완두콩 형태가 바뀌는 건 새 재료로 치지 않아요. 식단 첫날(${DATA.days[0].dateLabel}) 재료는 그 전부터 먹던 재료일 수 있어요.</div>
+    <div class="hint">지금 식단(이 기기에서 바꾼 재료 포함)에서 각 재료가 처음 들어가는 날을 시작일로 표시해요. 쌀 농도·완두콩 형태가 바뀌는 건 새 재료로 치지 않아요.</div>
   `;
 }
 
